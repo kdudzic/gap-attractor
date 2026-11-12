@@ -1,6 +1,6 @@
 # The Gap Attractor
 
-This repository is the public deliverable of a Sentient Futures Project Incubator project (September to November
+This repository is one of the deliverables of the Gap Attractor project conducted as part of the Sentient Futures Project Incubator (September to November
 2026). It holds the experiment harness, the analysis pipeline, a sample of real runs, and a summary of the
 results.
 
