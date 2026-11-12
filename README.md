@@ -1,8 +1,10 @@
-# The Gap Attractor
+# The Gap Attractor: Investigating Autonomous Exploration Behavior in LLM Agents
 
 This repository is one of the deliverables of the Gap Attractor project conducted as part of the Sentient Futures Project Incubator (September to November
 2026). It holds the experiment harness, the analysis pipeline, a sample of real runs, and a summary of the
 results.
+
+What happens when LLM agents are placed in an open environment without an explicit goal or reward? Using Wikipedia as the exploration environment, we investigate how agents navigate it under varying experimental conditions, looking for consistent patterns, biases, and behavioral attractors. We share our framework, observations, and implications.
 
 **Explore the runs:** the interactive [Field Map](https://observational.github.io/navigators/) shows where the
 agents went, next to where human readers click.
