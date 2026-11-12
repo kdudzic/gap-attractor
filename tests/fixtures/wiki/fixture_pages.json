@@ -1,0 +1,230 @@
+{
+  "fixture_name": "synthetic-development-wiki",
+  "purpose": "LOCAL DEVELOPMENT TESTS ONLY; not scientific or representative Wikipedia data.",
+  "pages": [
+    {
+      "page_id": 1000,
+      "title": "Civic Atlas",
+      "wikitext": "'''Civic Atlas''' is a synthetic development fixture page for local harness validation. It is not Wikipedia and must not be used for scientific analysis.\n\n== Links ==\n[[Archive]] [[Bridge]] [[Canal]] [[Garden]] [[Harbor]] [[Library]] [[Market]] [[Museum]] [[Observatory]] [[Orchard]] [[Pavilion]] [[Quarry]] [[Railway]] [[School]] [[Theater]] [[Workshop]] [[Meadow]] [[River]] [[Station]] [[Square]] [[Tower]] [[Village]] [[Warehouse]] [[Windmill]] [[Footpath]] [[Lighthouse]] [[Missing record]] [[File:Development diagram]]\nLowercase first letters, as real wikitext often writes them: [[clock]] [[foundry|metalworks]] [[greenhouse#Uses|glass houses]] [[archive]] [[file:Development sketch]]\n\n[[Category:Development navigation]]",
+      "created": "2026-01-01T00:00:00Z",
+      "modified": "2026-01-02T00:00:00Z"
+    },
+    {
+      "page_id": 1001,
+      "title": "Archive",
+      "wikitext": "'''Archive''' is a synthetic development fixture page for local harness validation. It is not Wikipedia and must not be used for scientific analysis.\n\n== Links ==\n[[Bridge]] [[Library]] [[Civic Atlas]]\n\n[[Category:Development reference]]",
+      "created": "2026-01-01T00:00:00Z",
+      "modified": "2026-01-02T00:00:00Z"
+    },
+    {
+      "page_id": 1002,
+      "title": "Bridge",
+      "wikitext": "'''Bridge''' is a synthetic development fixture page for local harness validation. It is not Wikipedia and must not be used for scientific analysis.\n\n== Links ==\n[[Canal]] [[Market]] [[Civic Atlas]]\n\n[[Category:Development navigation]]",
+      "created": "2026-01-01T00:00:00Z",
+      "modified": "2026-01-02T00:00:00Z"
+    },
+    {
+      "page_id": 1003,
+      "title": "Canal",
+      "wikitext": "'''Canal''' is a synthetic development fixture page for local harness validation. It is not Wikipedia and must not be used for scientific analysis.\n\n== Links ==\n[[Garden]] [[Museum]] [[Civic Atlas]]\n\n[[Category:Development reference]]",
+      "created": "2026-01-01T00:00:00Z",
+      "modified": "2026-01-02T00:00:00Z"
+    },
+    {
+      "page_id": 1004,
+      "title": "Garden",
+      "wikitext": "'''Garden''' is a synthetic development fixture page for local harness validation. It is not Wikipedia and must not be used for scientific analysis.\n\n== Links ==\n[[Harbor]] [[Observatory]] [[Civic Atlas]] [[Theater]]\n\n[[Category:Development navigation]]",
+      "created": "2026-01-01T00:00:00Z",
+      "modified": "2026-01-02T00:00:00Z"
+    },
+    {
+      "page_id": 1005,
+      "title": "Harbor",
+      "wikitext": "'''Harbor''' is a synthetic development fixture page for local harness validation. It is not Wikipedia and must not be used for scientific analysis.\n\n== Links ==\n[[Library]] [[Orchard]] [[Civic Atlas]]\n\n[[Category:Development reference]]",
+      "created": "2026-01-01T00:00:00Z",
+      "modified": "2026-01-02T00:00:00Z"
+    },
+    {
+      "page_id": 1006,
+      "title": "Library",
+      "wikitext": "'''Library''' is a synthetic development fixture page for local harness validation. It is not Wikipedia and must not be used for scientific analysis.\n\n== Links ==\n[[Market]] [[Pavilion]] [[Civic Atlas]]\n\n[[Category:Development navigation]]",
+      "created": "2026-01-01T00:00:00Z",
+      "modified": "2026-01-02T00:00:00Z"
+    },
+    {
+      "page_id": 1007,
+      "title": "Market",
+      "wikitext": "'''Market''' is a synthetic development fixture page for local harness validation. It is not Wikipedia and must not be used for scientific analysis.\n\n== Links ==\n[[Museum]] [[Quarry]] [[Civic Atlas]]\n\n[[Category:Development reference]]",
+      "created": "2026-01-01T00:00:00Z",
+      "modified": "2026-01-02T00:00:00Z"
+    },
+    {
+      "page_id": 1008,
+      "title": "Museum",
+      "wikitext": "'''Museum''' is a synthetic development fixture page for local harness validation. It is not Wikipedia and must not be used for scientific analysis.\n\n== Links ==\n[[Observatory]] [[Railway]] [[Civic Atlas]] [[Station]]\n\n[[Category:Development navigation]]",
+      "created": "2026-01-01T00:00:00Z",
+      "modified": "2026-01-02T00:00:00Z"
+    },
+    {
+      "page_id": 1009,
+      "title": "Observatory",
+      "wikitext": "'''Observatory''' is a synthetic development fixture page for local harness validation. It is not Wikipedia and must not be used for scientific analysis.\n\n== Links ==\n[[Orchard]] [[School]] [[Civic Atlas]]\n\n[[Category:Development reference]]",
+      "created": "2026-01-01T00:00:00Z",
+      "modified": "2026-01-02T00:00:00Z"
+    },
+    {
+      "page_id": 1010,
+      "title": "Orchard",
+      "wikitext": "'''Orchard''' is a synthetic development fixture page for local harness validation. It is not Wikipedia and must not be used for scientific analysis.\n\n== Links ==\n[[Pavilion]] [[Theater]] [[Civic Atlas]]\n\n[[Category:Development navigation]]",
+      "created": "2026-01-01T00:00:00Z",
+      "modified": "2026-01-02T00:00:00Z"
+    },
+    {
+      "page_id": 1011,
+      "title": "Pavilion",
+      "wikitext": "'''Pavilion''' is a synthetic development fixture page for local harness validation. It is not Wikipedia and must not be used for scientific analysis.\n\n== Links ==\n[[Quarry]] [[Workshop]] [[Civic Atlas]]\n\n[[Category:Development reference]]",
+      "created": "2026-01-01T00:00:00Z",
+      "modified": "2026-01-02T00:00:00Z"
+    },
+    {
+      "page_id": 1012,
+      "title": "Quarry",
+      "wikitext": "'''Quarry''' is a synthetic development fixture page for local harness validation. It is not Wikipedia and must not be used for scientific analysis.\n\n== Links ==\n[[Railway]] [[Meadow]] [[Civic Atlas]] [[Warehouse]]\n\n[[Category:Development navigation]]",
+      "created": "2026-01-01T00:00:00Z",
+      "modified": "2026-01-02T00:00:00Z"
+    },
+    {
+      "page_id": 1013,
+      "title": "Railway",
+      "wikitext": "'''Railway''' is a synthetic development fixture page for local harness validation. It is not Wikipedia and must not be used for scientific analysis.\n\n== Links ==\n[[School]] [[River]] [[Civic Atlas]]\n\n[[Category:Development reference]]",
+      "created": "2026-01-01T00:00:00Z",
+      "modified": "2026-01-02T00:00:00Z"
+    },
+    {
+      "page_id": 1014,
+      "title": "School",
+      "wikitext": "'''School''' is a synthetic development fixture page for local harness validation. It is not Wikipedia and must not be used for scientific analysis.\n\n== Links ==\n[[Theater]] [[Station]] [[Civic Atlas]]\n\n[[Category:Development navigation]]",
+      "created": "2026-01-01T00:00:00Z",
+      "modified": "2026-01-02T00:00:00Z"
+    },
+    {
+      "page_id": 1015,
+      "title": "Theater",
+      "wikitext": "'''Theater''' is a synthetic development fixture page for local harness validation. It is not Wikipedia and must not be used for scientific analysis.\n\n== Links ==\n[[Workshop]] [[Square]] [[Civic Atlas]]\n\n[[Category:Development reference]]",
+      "created": "2026-01-01T00:00:00Z",
+      "modified": "2026-01-02T00:00:00Z"
+    },
+    {
+      "page_id": 1016,
+      "title": "Workshop",
+      "wikitext": "'''Workshop''' is a synthetic development fixture page for local harness validation. It is not Wikipedia and must not be used for scientific analysis.\n\n== Links ==\n[[Meadow]] [[Tower]] [[Civic Atlas]] [[Foundry]]\n\n[[Category:Development navigation]]",
+      "created": "2026-01-01T00:00:00Z",
+      "modified": "2026-01-02T00:00:00Z"
+    },
+    {
+      "page_id": 1017,
+      "title": "Meadow",
+      "wikitext": "'''Meadow''' is a synthetic development fixture page for local harness validation. It is not Wikipedia and must not be used for scientific analysis.\n\n== Links ==\n[[River]] [[Village]] [[Civic Atlas]]\n\n[[Category:Development reference]]",
+      "created": "2026-01-01T00:00:00Z",
+      "modified": "2026-01-02T00:00:00Z"
+    },
+    {
+      "page_id": 1018,
+      "title": "River",
+      "wikitext": "'''River''' is a synthetic development fixture page for local harness validation. It is not Wikipedia and must not be used for scientific analysis.\n\n== Links ==\n[[Station]] [[Warehouse]] [[Civic Atlas]]\n\n[[Category:Development navigation]]",
+      "created": "2026-01-01T00:00:00Z",
+      "modified": "2026-01-02T00:00:00Z"
+    },
+    {
+      "page_id": 1019,
+      "title": "Station",
+      "wikitext": "'''Station''' is a synthetic development fixture page for local harness validation. It is not Wikipedia and must not be used for scientific analysis.\n\n== Links ==\n[[Square]] [[Windmill]] [[Civic Atlas]]\n\n[[Category:Development reference]]",
+      "created": "2026-01-01T00:00:00Z",
+      "modified": "2026-01-02T00:00:00Z"
+    },
+    {
+      "page_id": 1020,
+      "title": "Square",
+      "wikitext": "'''Square''' is a synthetic development fixture page for local harness validation. It is not Wikipedia and must not be used for scientific analysis.\n\n== Links ==\n[[Tower]] [[Footpath]] [[Civic Atlas]] [[Archive]]\n\n[[Category:Development navigation]]",
+      "created": "2026-01-01T00:00:00Z",
+      "modified": "2026-01-02T00:00:00Z"
+    },
+    {
+      "page_id": 1021,
+      "title": "Tower",
+      "wikitext": "'''Tower''' is a synthetic development fixture page for local harness validation. It is not Wikipedia and must not be used for scientific analysis.\n\n== Links ==\n[[Village]] [[Lighthouse]] [[Civic Atlas]]\n\n[[Category:Development reference]]",
+      "created": "2026-01-01T00:00:00Z",
+      "modified": "2026-01-02T00:00:00Z"
+    },
+    {
+      "page_id": 1022,
+      "title": "Village",
+      "wikitext": "'''Village''' is a synthetic development fixture page for local harness validation. It is not Wikipedia and must not be used for scientific analysis.\n\n== Links ==\n[[Warehouse]] [[Foundry]] [[Civic Atlas]]\n\n[[Category:Development navigation]]",
+      "created": "2026-01-01T00:00:00Z",
+      "modified": "2026-01-02T00:00:00Z"
+    },
+    {
+      "page_id": 1023,
+      "title": "Warehouse",
+      "wikitext": "'''Warehouse''' is a synthetic development fixture page for local harness validation. It is not Wikipedia and must not be used for scientific analysis.\n\n== Links ==\n[[Windmill]] [[Greenhouse]] [[Civic Atlas]]\n\n[[Category:Development reference]]",
+      "created": "2026-01-01T00:00:00Z",
+      "modified": "2026-01-02T00:00:00Z"
+    },
+    {
+      "page_id": 1024,
+      "title": "Windmill",
+      "wikitext": "'''Windmill''' is a synthetic development fixture page for local harness validation. It is not Wikipedia and must not be used for scientific analysis.\n\n== Links ==\n[[Footpath]] [[Clock]] [[Civic Atlas]] [[Harbor]]\n\n[[Category:Development navigation]]",
+      "created": "2026-01-01T00:00:00Z",
+      "modified": "2026-01-02T00:00:00Z"
+    },
+    {
+      "page_id": 1025,
+      "title": "Footpath",
+      "wikitext": "'''Footpath''' is a synthetic development fixture page for local harness validation. It is not Wikipedia and must not be used for scientific analysis.\n\n== Links ==\n[[Lighthouse]] [[Civic Atlas]] [[Civic Atlas]]\n\n[[Category:Development reference]]",
+      "created": "2026-01-01T00:00:00Z",
+      "modified": "2026-01-02T00:00:00Z"
+    },
+    {
+      "page_id": 1026,
+      "title": "Lighthouse",
+      "wikitext": "'''Lighthouse''' is a synthetic development fixture page for local harness validation. It is not Wikipedia and must not be used for scientific analysis.\n\n== Links ==\n[[Foundry]] [[Archive]] [[Civic Atlas]]\n\n[[Category:Development navigation]]",
+      "created": "2026-01-01T00:00:00Z",
+      "modified": "2026-01-02T00:00:00Z"
+    },
+    {
+      "page_id": 1027,
+      "title": "Foundry",
+      "wikitext": "'''Foundry''' is a synthetic development fixture page for local harness validation. It is not Wikipedia and must not be used for scientific analysis.\n\n== Links ==\n[[Greenhouse]] [[Bridge]] [[Civic Atlas]]\n\n[[Category:Development reference]]",
+      "created": "2026-01-01T00:00:00Z",
+      "modified": "2026-01-02T00:00:00Z"
+    },
+    {
+      "page_id": 1028,
+      "title": "Greenhouse",
+      "wikitext": "'''Greenhouse''' is a synthetic development fixture page for local harness validation. It is not Wikipedia and must not be used for scientific analysis.\n\n== Links ==\n[[Clock]] [[Canal]] [[Civic Atlas]] [[Observatory]]\n\n[[Category:Development navigation]]",
+      "created": "2026-01-01T00:00:00Z",
+      "modified": "2026-01-02T00:00:00Z"
+    },
+    {
+      "page_id": 1029,
+      "title": "Clock",
+      "wikitext": "'''Clock''' is a synthetic development fixture page for local harness validation. It is not Wikipedia and must not be used for scientific analysis.\n\n== Links ==\n[[Civic Atlas]] [[Garden]] [[Civic Atlas]]\n\n[[Category:Development reference]]",
+      "created": "2026-01-01T00:00:00Z",
+      "modified": "2026-01-02T00:00:00Z"
+    },
+    {
+      "page_id": 1030,
+      "title": "Anchor Text Example",
+      "wikitext": "'''Anchor Text Example''' keeps [[Machine learning|machine learning]] as visible prose.\n\n[[Category:Development navigation]]",
+      "created": "2026-01-01T00:00:00Z",
+      "modified": "2026-01-02T00:00:00Z"
+    },
+    {
+      "page_id": 1031,
+      "title": "Machine learning",
+      "wikitext": "'''Machine learning''' is a synthetic destination page.\n\n[[Category:Development reference]]",
+      "created": "2026-01-01T00:00:00Z",
+      "modified": "2026-01-02T00:00:00Z"
+    }
+  ]
+}

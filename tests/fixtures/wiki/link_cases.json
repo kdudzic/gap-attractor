@@ -1,0 +1,11 @@
+{
+  "purpose": "LOCAL TESTS ONLY: link resolution cases (lowercase first letter, redirects, self-links, missing targets).",
+  "pages": [
+    {"title": "Hub", "page_id": 1, "wikitext": "Hub links to [[oxygen]] and again to [[Oxygen]], to [[O2]] (a redirect to Oxygen), to itself as [[Hub]] and [[Hub alias]] (a redirect to Hub), to a [[Missing page]], to [[Carbon|carbon atoms]] and to [[nitrogen]].\n[[Category:Test pages]]"},
+    {"title": "Oxygen", "page_id": 2, "wikitext": "Oxygen links back to [[Hub]] and to [[Carbon]].\n[[Category:Elements]]"},
+    {"title": "Carbon", "page_id": 3, "wikitext": "Carbon links to [[Oxygen]] and [[nitrogen]].\n[[Category:Elements]]"},
+    {"title": "Nitrogen", "page_id": 4, "wikitext": "Nitrogen links to [[Hub]].\n[[Category:Elements]]"},
+    {"title": "O2", "page_id": 5, "redirect": "Oxygen", "wikitext": "#REDIRECT [[Oxygen]]"},
+    {"title": "Hub alias", "page_id": 6, "redirect": "Hub", "wikitext": "#REDIRECT [[Hub]]"}
+  ]
+}

@@ -1,0 +1,45 @@
+# One agent, one context file (the CLM setting).
+mode: single
+budget_tokens: 32768          # 23 Oct 2026 (was 16 384): nothing is ever shortened any more (shrink_edits gone), so the
+                              # agent gets more room instead; the limit is CLM's own (28 672 + reserve). Visited pages:
+                              # median ~4 100 tokens, mean ~6 000, so the limit holds about 5-7 pages
+reserve_tokens: 4096          # as CLM: what the model may keep (the LIMIT it is shown) = budget - reserve = 28 672
+overflow: wall                # wall (hard budget): pages arrive whole; a page that takes the context past the limit
+                              # brings only the strongest warning; a move is held while the context (all but the newest
+                              # list of links) is over the limit, and the model edits again; a move made while still
+                              # over after max_held_moves holds ends the run after it (termination context_budget).
+                              # soft (cut the page, drop old turns) is refused: the hard rule below
+max_held_moves: 3             # wall only: moves held per step before the move goes ahead and the run ends
+shrink_edits: false           # HARD RULE (23 Oct 2026): the harness never shortens, elides or rewrites anything in an
+                              # agent's context; true is refused. Until then long commands and their output were cut after
+                              # each page, and models replayed the cut commands ("… [N characters elided]") and failed
+count: whole                  # what the size counts. whole (from 21 Oct 2026): the whole request as sent (instructions,
+                              # turns as messages, tool definitions), at characters per token calibrated per model on
+                              # its billed prompt tokens | file: the turns as file text only (earlier runs; for Haiku and
+                              # Gemini ~1.3-1.4x below the billed size)
+chars_per_token: 4            # count=whole: the starting value before calibration; count=file: the size estimate when
+                              # tiktoken is not installed
+tokenizer: auto               # count=file only: auto = tiktoken o200k if installed, else characters / chars_per_token
+save_requests: true           # also write every request as sent (requests/NNNN.json) next to calls.jsonl, for
+                              # audit_requests.py (on by default from 22 Oct 2026)
+readout: true                 # a notice turn after every page: [context: ~N/limit tokens]
+nudges: true                  # budget nudges in that notice (never without an editing interface)
+nudge_tiers: [0.25, 0.5, 0.75]   # fractions of the limit, each fires once (re-armed when the context shrinks)
+urgent_room: 0.10             # soft only: urgent nudge when less room is left than this x limit or the mean recent page
+hard_limit: 1.5               # soft only: past hard_limit x budget the harness drops the oldest turns (with a notice)
+min_observation_tokens: 2000  # soft only: a page's article is cut to fit, but kept to at least this much; links never
+max_edit_turns: 7             # replies per step that may edit (retries included); then the model is asked to move
+                              # (they start again after every held move). 7 from 22 Oct 2026 (was 3: on 8 of the 9
+                              # pilot pages where it ran out, the agent was still editing under the limit, by choice)
+edit_gate: fit                # fit: keep an edit unless it grows the context past the limit | shrink: only shrinking edits
+edits_in_context: true        # as in CLM, each editing call and its result are appended to the context
+headers: auto                 # [[TURN i ...]] lines in the API messages: auto = only with ctx_edit=tool (it names
+                              # turns by number); CLM sends plain messages (headers only in the file) | true | false
+attribution: labelled         # joint worlds only (see joint.yaml)
+awareness: introduced         # joint worlds only (see joint.yaml)
+others_as: auto               # joint worlds only (see joint.yaml)
+append: structured            # what of the model's own replies goes into the file: structured (the move and its reasoning
+                              # argument; editing calls described) | verbatim (every reply as written: its text, its calls
+                              # with their arguments, failed attempts and the harness's answer to them)
+append_reasoning: false       # verbatim only: also the reasoning trace a model returns (as [thinking] ... [/thinking])
+snapshots: true               # context/step_NNN.txt after every step

@@ -1,0 +1,11 @@
+name: openai
+model: gpt-4o-mini
+temperature: 1           # default since 2026-10-14 (was 0 for groq and openrouter, 0.5 for openai and mock)
+top_p: 0.5
+timeout: 120
+max_retries: 4
+api_key_env: OPENAI_API_KEY
+base_url: null
+max_tokens: 700        # reply length cap per call; reasoning models count their reasoning against it, so raise it for them
+max_backoff_s: 60      # longest wait between retries (Retry-After is honoured up to this)
+extra_body: {}         # extra request fields for this provider, on the command line: +provider.extra_body.reasoning.effort=low

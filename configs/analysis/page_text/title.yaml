@@ -1,0 +1,5 @@
+# Titles only: cheaper and coarser than the lead.
+defaults:
+  - lead
+  - _self_
+field: title

@@ -1,0 +1,31 @@
+defaults:
+  - provider: mock
+  - wikipedia: fixture
+  - experiment: smoke
+  - prompt: free          # free | browse | notask: opening wording of the system prompt (after experiment)
+  - tools: default
+  - context_embedding: none   # none | steps: embed the context the model was given after every step (opt-in)
+  - _self_
+  - variant: a_hub        # a_hub | b_search_first | c_search_anytime | d_search_first_anytime
+  - override hydra/job_logging: none   # no <job>.log file in the working directory
+
+# Hydra only composes configs and runs sweeps (-m). Single runs write nothing of Hydra's. A sweep (-m) records its
+# overrides once in <output.directory>/_sweeps/<time>/multirun.yaml, outside every experiment/batch folder.
+hydra:
+  job:
+    chdir: false
+  run:
+    dir: .
+  sweep:
+    dir: ${output.directory}/_sweeps/${now:%Y%m%d_%H%M%S}
+    subdir: .
+  output_subdir: null   # no .hydra/ folder
+
+output:
+  directory: ${oc.env:GAP_ATTRACTOR_OUTPUT,outputs}
+  save_model_inputs: true   # model_inputs/ folder with exactly what the model was sent
+
+batch:
+  resume: false   # true = finish today's batch with this index; or a batch folder: re-runs cut-off / api_error runs only
+  index: 1   # or auto: the next free batch number under output.directory/experiment.name (use for sweeps and parallel runs)
+  start_pages: [Civic Atlas]

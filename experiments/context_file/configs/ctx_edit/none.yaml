@@ -1,0 +1,7 @@
+# @package ctx
+# No editing: every page and move is appended and nothing is removed (the format alone; an ablation rung). Use a
+# budget large enough for the whole run, e.g. ctx.budget_tokens=1000000.
+interface: none
+nudges: false
+overflow: wall                # never cut (hard rule); without editing the budget must be too large to reach
+                              # (>= 1 000 000 tokens, checked), so the limit never binds

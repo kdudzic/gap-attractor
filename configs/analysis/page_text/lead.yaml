@@ -1,0 +1,5 @@
+# Title and lead section of each article, from leads.sqlite (scripts/build_wiki_resources.py leads).
+kind: lead_db
+db: ${resources}/leads.sqlite
+field: title_lead           # title_lead | title | lead
+max_chars: 2000

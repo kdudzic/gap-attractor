@@ -1,0 +1,12 @@
+backend: dump
+fixture_path: null
+dump_path: ${oc.env:GAP_ATTRACTOR_DUMP,data/wikipedia/enwiki-20260901/}
+cache_dir: ${oc.env:GAP_ATTRACTOR_CACHE,.cache/gap_attractor}
+# Set GAP_ATTRACTOR_DUMP_XML / GAP_ATTRACTOR_DUMP_INDEX to your dump's file names (docs/reproduce.md).
+dump_xml_filename: ${oc.env:GAP_ATTRACTOR_DUMP_XML,enwiki-latest-pages-articles-multistream.xml.bz2}
+dump_index_filename: ${oc.env:GAP_ATTRACTOR_DUMP_INDEX,enwiki-latest-pages-articles-multistream-index.txt.bz2}
+# Compressed-byte retrieval guard, not an article presentation limit. Exceeding it fails loudly.
+max_compressed_block_bytes: 32000000
+variant: full
+lookup_format: sqlite   # sqlite (built once, shared between processes) | pickle (schema 1.x, ~7 GB RAM per process)
+page_cache_size: 4096   # parsed pages kept in memory per process

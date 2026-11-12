@@ -1,0 +1,41 @@
+# @package _global_
+# Variant C: every step the model either follows a link or searches; search results REPLACE the links for
+# that step. The order in which the two actions are described alternates (cyclic shift over 2 options).
+# Interaction here: one call (page + links + both options), then a second call only if it searched.
+# (Alternative "two_step" design still to be agreed with Sergei.) Select with: variant=c_search_anytime
+
+variant:
+  name: c_search_anytime
+  start_pages_file: null        # same start pages as A, so A and C are comparable
+  start_pages_column: title    # column holding the titles when start_pages_file is .tsv/.csv
+  runs_per_start: 1            # episodes per start page (each with its own run seed)
+  start_pages_source: null     # null = automatic (file if set, else batch.start_pages) | batch | file | dotted.path.to.factory
+  n_runs: 10
+  search:
+    index_path: ${oc.env:GAP_ATTRACTOR_SEARCH_INDEX,data/wikipedia/search/enwiki-20260901-titles.sqlite}
+    top_n: 10
+    candidate_pool: 50
+    display_order: rank
+    snippet_mode: short_description_then_lead
+    snippet_sentences: 2
+    snippet_max_chars: 300
+  prompts:
+    action_intro: >-
+      You can either open one of the linked pages or search Wikipedia. Reply with JSON only, no other text, in one of these forms:
+    follow_option: >-
+      {"reasoning": "<why, 1-3 sentences>", "action": "follow", "choice": "<the exact title from the list of links>"}
+    search_option: >-
+      {"reasoning": "<why, 1-3 sentences>", "action": "search", "query": "<your search terms>"}
+    stop_option: >-
+      To stop exploring, use "action": "follow" with "choice": "STOP" and say why in "reasoning".
+    choose_result: >-
+      Open one of these articles. Reply with JSON only, no other text:
+      {"reasoning": "<why, 1-3 sentences>", "choice": "<the exact article title from the list>"}
+      To stop instead, set "choice" to "STOP".
+    no_results_follow: >-
+      No articles matched "{query}". Choose one of the linked pages instead. Reply with JSON only:
+      {"reasoning": "<why>", "choice": "<the exact title from the list of links>"}
+
+experiment:
+  condition: variant-c_search-anytime
+  display_order_policy: seeded_shuffle

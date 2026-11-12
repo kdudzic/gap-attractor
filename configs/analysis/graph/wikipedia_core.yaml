@@ -1,0 +1,7 @@
+# The enwiki-20260901 link graph's largest strongly connected component (scripts/graph/, built 2026-10-08).
+# Another graph: write it with gap_attractor.analysis.graph.save_graph and point `dir` at it (hubs: top_in_degree
+# if it has no hub list), or give `kind` a dotted path to your own loader.
+kind: core_npz
+dir: ${oc.env:GAP_ATTRACTOR_GRAPH,data/graph}
+hubs: pool                  # pool: Claire's hub pool (340+ in-links) | top_in_degree: the hub_top_n most linked-to pages
+hub_top_n: 1000

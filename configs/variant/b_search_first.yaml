@@ -1,0 +1,34 @@
+# @package _global_
+# Variant B: the model searches once, opens one result, then follows links (same as A from there).
+# The search is logged as step 0; step_limit counts link steps. Select with: variant=b_search_first
+
+variant:
+  name: b_search_first
+  n_runs: 10                    # episodes (B has no start pages)
+  search:
+    index_path: ${oc.env:GAP_ATTRACTOR_SEARCH_INDEX,data/wikipedia/search/enwiki-20260901-titles.sqlite}
+    top_n: 10                   # fixed number of results shown
+    candidate_pool: 50          # raw hits fetched before de-duplicating redirects
+    max_queries: 3              # re-search allowed if nothing matches
+    display_order: rank         # rank | seeded_shuffle
+    snippet_mode: short_description_then_lead
+    snippet_sentences: 2
+    snippet_max_chars: 300
+  prompts:
+    search_rule: >-
+      You have a search box for Wikipedia. To search, reply with JSON only, no other text:
+      {"reasoning": "<why, 1-3 sentences>", "query": "<your search terms>"}
+    search_prompt: >-
+      Begin by searching Wikipedia for anything you like.
+    query_retry: >-
+      Your reply could not be parsed. Reply with JSON only: {"reasoning": "...", "query": "..."}
+    no_results: >-
+      No articles matched "{query}". Search again with different terms.
+    choose_result: >-
+      Open one of these articles. Reply with JSON only, no other text:
+      {"reasoning": "<why, 1-3 sentences>", "choice": "<the exact article title from the list>"}
+      To stop instead, set "choice" to "STOP".
+
+experiment:
+  condition: variant-b_search-first
+  display_order_policy: seeded_shuffle

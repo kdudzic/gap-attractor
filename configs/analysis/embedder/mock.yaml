@@ -1,0 +1,3 @@
+# Offline and deterministic (hashed bag of words). For tests and dry runs; not a real embedding.
+kind: mock
+dims: 64

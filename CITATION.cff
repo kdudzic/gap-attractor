@@ -1,0 +1,33 @@
+cff-version: 1.2.0
+message: "If you use this repository, please cite it as below. A paper is in preparation."
+title: "The Gap Attractor: what language-model agents do on Wikipedia when given no task"
+type: software
+authors:
+  - family-names: Bosibori
+    given-names: Cindy
+  - family-names: Xu
+    given-names: Claire
+  - family-names: M D
+    given-names: Gagana
+  - family-names: Dudzic
+    given-names: Kacper
+  - family-names: Manvikar
+    given-names: Pooja
+  - family-names: Bagoriya
+    given-names: Sachin
+  - family-names: Abundis
+    given-names: Sebastian
+  - family-names: Kudriashov
+    given-names: Sergei
+  - family-names: Komarova
+    given-names: Yuliya
+  - family-names: Bossmann
+    given-names: Julia
+date-released: "2026-11-13"
+license: MIT
+keywords:
+  - language models
+  - agents
+  - AI safety
+  - model welfare
+  - Wikipedia

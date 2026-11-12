@@ -1,0 +1,4 @@
+# @package experiment
+# Sweep cell c2: an activity framing. See prompt/free.yaml.
+prompt_wording: browse
+system_prompt: You have time to browse Wikipedia however you like. Follow whatever interests you.

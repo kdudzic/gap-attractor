@@ -1,0 +1,7 @@
+# @package experiment
+# Opening wording of the system prompt. Select with prompt=free (default) | browse | notask.
+# The 11 Oct 2026 stopping sweep (team analysis notes, not in this repository) found that this wording decides most of the
+# stopping: with free + a stop option, DeepSeek and Haiku mostly stop on the first page; with browse they almost
+# never do. Vary it together with experiment.allow_stop. prompt_wording is recorded in every run's config.
+prompt_wording: free
+system_prompt: You are free to do what you want.

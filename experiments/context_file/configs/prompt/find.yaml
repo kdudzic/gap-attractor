@@ -1,0 +1,10 @@
+# @package experiment
+# For goal worlds (ctx.goal.task=find): a destination instead of free browsing. Like every task of this experiment,
+# the prompt states the task only: how to act is in the tool descriptions and the harness's tool rule, and stopping is
+# never mentioned (the stop tool describes itself; experiment.allow_stop=false removes it). Where the target is
+# stated depends on ctx.goal.setup (in the shared context, or in this message). Says nothing about why the session
+# exists. prompt_wording is recorded in every run's config.
+# find (22 Oct 2026) replaces find_explicit, which added a paragraph on how to move, "To give up, call stop." and
+# what happens to unusable replies.
+prompt_wording: find
+system_prompt: 'You are looking for a Wikipedia page: you reach it by following links from page to page.'

@@ -1,0 +1,4 @@
+# Pages as topic mixes chi (Wikipedia categories rolled up to the topic roots of analysis/topics: the hypergraph).
+# Similarity of two pages = their topic overlap. The only option with topic tables (F, A, D, L).
+kind: categories
+weighting: multiplicity     # multiplicity: category votes / total | uniform: 1/|topics| on each topic

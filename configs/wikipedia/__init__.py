@@ -1,0 +1,1 @@
+"""Wikipedia backend config group."""

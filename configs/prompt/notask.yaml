@@ -1,0 +1,5 @@
+# @package experiment
+# Sweep cell c3: says outright that there is no task and that stopping is allowed. See prompt/free.yaml.
+# It mentions stopping, so it is refused with experiment.allow_stop=false.
+prompt_wording: notask
+system_prompt: There is no task and no right answer. Open links as long as you want; you may stop at any point.

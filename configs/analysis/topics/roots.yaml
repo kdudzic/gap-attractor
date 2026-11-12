@@ -1,0 +1,8 @@
+# Topic roots for the category rollup (scripts/build_wiki_resources.py rollup). Claire Xu's list from
+# hub_analysis/config.yaml. Redirected roots are followed (Arts -> The arts), so labels are the targets.
+# Changing this list changes the topic space: rebuild the resources and compare topic_hash in results.json.
+name: roots
+max_depth: 7
+roots: [Arts, Sports, Entertainment, Mass media, Geography, History, Military, Politics, Government, Law,
+        Economy, Business, Society, Culture, Humans, Education, Language, Religion, Philosophy, Science,
+        Mathematics, Technology, Engineering, Health, Life, Nature, Universe, Food and drink, Time]

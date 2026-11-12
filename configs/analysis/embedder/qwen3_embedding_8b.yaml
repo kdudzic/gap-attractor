@@ -1,0 +1,6 @@
+# Qwen3-Embedding-8B via OpenRouter: 4096 dimensions, ~$0.01 per million tokens. A cross-check for bge_m3
+# (results should not hinge on one embedder). Same family as the Qwen agents, so not the primary embedder.
+defaults:
+  - bge_m3
+  - _self_
+model: qwen/qwen3-embedding-8b

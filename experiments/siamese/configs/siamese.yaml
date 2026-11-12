@@ -1,0 +1,175 @@
+# Siamese agents: N agents (any models) share ONE capped, self-edited context file while each solves its own
+# LiveCodeBench problems. The harness's configs/ are on the search path (provider: mock | openrouter | ...).
+defaults:
+  - provider: mock
+  - _self_
+
+hydra:
+  job: {chdir: false}
+  run: {dir: .}
+  output_subdir: null
+
+output:
+  directory: ${oc.env:GAP_ATTRACTOR_OUTPUT,outputs}
+  name: siamese              # <directory>/<name>/<batch>/<cell>/world_s<seed>/
+  batch: smoke
+  cell: ""                   # empty: made from the settings (sharing, relation, models, budget)
+  save_requests: false       # requests/: every message list sent (large)
+
+provider:                    # over the harness's provider config: LCB's pass@1 sampling and our reply limit
+  temperature: 0.2
+  top_p: 0.95
+  max_tokens: 8000           # per reply; stated to the model; a cut-off reply is marked in the file
+  timeout: 600
+
+problems:
+  file: data/cache/siamese/lcb/test6.jsonl   # LCB code_generation_lite test6.jsonl (release_v6 additions, 175)
+  difficulty: [medium]       # easy | medium | hard (any of)
+  platform: []               # leetcode | atcoder | codeforces; empty = all
+  start_date: null
+  end_date: null
+  per_agent: 10
+
+world:
+  n_agents: 2
+  agent_providers: []        # per-agent provider overrides, cycled by agent number, e.g.
+                             # [{model: deepseek/deepseek-v4.1-flash}, {model: anthropic/claude-haiku-5.5}]
+  setup: assigned            # assigned (each agent its own problems, statements in the file) | pool (shared pool of
+                             # problems, any agent works on any, plain chat) | external (each agent's problem in its own
+                             # instructions, outside the file; plain chat)
+  identity: none             # pool / external: none (nothing said about other agents) | names
+  marks: none                # pool / external, identity=names: none | authors (each message starts with [agent k])
+  chat_others: own          # pool / external: other agents' turns as own assistant messages (own) | user messages that start with [agent k] (user)
+  goal: individual           # individual | joint (external, shared, names: one team score; submit may name another agent's problem)
+  reasoning_in_context: false  # true: the provider's returned reasoning is written into the context before the reply
+  alter_notice: false        # true: an agent's next status says which other agents removed or changed its turns
+  need_line: ""              # state_chain, external, shared: "reason" | "directive": the status names the turn that holds a value a
+                             # later task will ask for (one line per pending link, never the value)
+  cross_test: none           # external, identity=names: none | ring (agent k runs the tests of agent k+1's problem,
+                             # never its own; a reply without a tool call is a message and ends the turn)
+  continuity: false          # external: one sentence that the context carries over from problem to problem
+  curation_advice: ""        # non-empty: this sentence is added to the instructions (a prompt baseline for curation)
+  dashboard: false           # true: the status line lists every turn with its size, author, kind and age (arXiv 2606.30005)
+  history: false             # external: each agent's instructions list its own earlier problems (title, accepted?)
+  pool_protect: unsolved     # pool: unsolved (open statements cannot be removed) | none (removing one drops the problem)
+  pool_open: 0               # pool: problems open at a time (0 = agents + 1)
+  pool_rounds: 0             # pool: round budget (0 = problems x max_work_calls / agents + 10)
+  relation: different        # different: each agent its own problems | same: every agent the same problems
+  sharing: full              # full: anyone may change any turn (the core assumption) | readonly_others | separate
+  attribution: labelled      # turns carry agent=k
+  order: shuffled            # shuffled (a new seeded order every round) | fixed (by agent number) |
+                             # turn-taking (first mover drawn once from the seed, then a fixed order)
+  schedule: rounds           # rounds (one step each per round) | free-for-all (each agent at its own pace; atomic
+                             # changes; edits pinned to the turns the agent saw, refused if those changed meanwhile)
+  awareness: introduced      # assigned setup: introduced (instructions name the others, agent=k labels, per-agent
+                             # readout) | strangers (none) | rumour (as strangers + hint_text). Old names accepted.
+  hint_text: "This context may be shared: others may also read and write it."
+  others_as: user            # how another agent's turns are sent: user | own (as if one's own replies)
+  seeds: [1]
+  rounds: 0                  # > 0: the world lasts exactly this many rounds (every agent takes that many steps;
+                             # give streams long enough that nobody runs out). 0: until every stream is done
+  exit_question: ""          # non-empty: after the end, each agent is asked this once (its final view + the
+                             # question, text only); logged in exit.jsonl, never written to the file
+  max_work_calls: 8          # run_tests + submit per problem; after the last run the program is submitted
+  max_edit_calls: 3          # edit_context calls before each work call (given back after a held call)
+  max_held: 3                # held work calls per step before the oldest unprotected turns are evicted
+  evict: true               # false: after max_held holds the turn ends with nothing done; the harness never removes
+                             # turns (only agents' own edits change the context; rule of 23 Oct)
+  end_over_limit: 0          # > 0 (needs evict=false): that many held calls in a row (or held replies, with no problem
+                             # to work on), with no change that made the context smaller in between, end the agent's
+                             # session (ended.jsonl; as experiments/ctx_inject and the CLM wall). The instructions say so
+  after_stream: leave        # leave | stay (needs rounds): an agent whose stream is finished stays until the world
+                             # ends, with no problem: it can edit and write messages (a reply without a tool call
+                             # ends its turn; over the limit it is held, as a call is)
+  max_calls_per_step: 14     # model calls per step (then the step ends without a work call)
+  max_steps_per_problem: 24  # then the latest program is submitted
+  max_api_errors: 5          # failed calls (after the provider's retries) before an agent is ended
+  feedback_on_submit: bit    # bit: accepted / not accepted | none: "Submitted."
+
+ctx:
+  atomic: false              # true: an editing call is written into the file after it ran, with its result (main d545615)
+  edit: tool                 # tool (edit_context) | bash (CLM-style: the agent's sandbox holds the file as /ctx/context.txt)
+  bash:
+    image: gap-ctx-sandbox:1
+    command_timeout_s: 120
+    output_chars: 4000       # characters of each stream shown (atomic: the start, then "[… N more bytes not shown]");
+                             # 0 = no fixed cap: only output larger than the agent's whole limit is cut
+    log_work: true           # logging only: what /work holds after each command (work.jsonl: offloading, publication)
+    workspace: kept          # /work: kept (each agent's own, for the whole run) | emptied (after each command)
+    output_bytes: 65536
+    pids_limit: 128
+    memory: 512m
+    cpus: 1
+    tmpfs_size: 64m
+    ctx_size: 16m
+    max_file_bytes: 8388608
+    nofile: 256
+  count: whole               # whole (system + messages + tool schemas + status, per-model chars/token calibrated on
+                             # the billed prompt) | file (system + file at chars/4: runs before 20 Oct) | turns
+                             # (only the messages after the instructions, calibrated as whole: the instructions,
+                             # tool schemas and status always fit; pool / external; study designs from 1 Nov)
+  cap: true                  # false: no limit shown, no holds (Stage 0b: natural use)
+  budget_tokens: 16384       # per file (joint: the one shared file; separate: each agent's file)
+  reserve_tokens: 2048       # the limit shown = budget - reserve
+  nudge_tiers: [0.25, 0.5, 0.75]
+  prompt_style: neutral      # nudges state the size only
+  readout_by_agent: true     # shared file: the status line also says how many tokens each agent holds
+  chars_per_token: 4
+  tokenizer: auto            # tiktoken o200k if installed, else characters / 4
+
+reasoning: default           # default | low | off: sets provider.extra_body.reasoning (OpenRouter) for every agent
+                             # unless an agent override gives extra_body
+
+grader:
+  image: siamese-grader:1    # docker build -t siamese-grader:1 -f sandbox/Dockerfile .  (in experiments/siamese)
+  timeout_per_test: 6        # LCB's default
+  memory: 2g
+  cpus: 1
+  pids_limit: 256
+  tmpfs_size: 1g
+  ctx_size: 1m
+  max_file_bytes: 134217728   # 128 MB: LCB's largest test sets are ~32 MB (abc396_f)
+  command_timeout_s: 1800
+  output_bytes: 1048576
+
+parallel: 1                  # worlds run at the same time (each with its own grader container)
+
+# $ per million tokens (input, output) when the service does not report the cost (OpenRouter list, 16 Oct 2026)
+prices:
+  deepseek/deepseek-v4.1-flash: [0.036, 0.66]
+  anthropic/claude-haiku-5.5: [0.10, 0.50]
+  qwen/qwen3.7-flash: [0.03, 0.13]
+  qwen/qwen3.8-flash: [0.15, 0.47]
+  qwen/qwen3.6-27b: [0.25, 2.00]
+  google/gemini-3.8-flash: [0.825, 4.125]
+  z-ai/glm-5.3-flash: [0.048, 0.20]
+  # OpenRouter list, 26 Oct 2026
+  openai/gpt-6-luna: [0.10, 0.50]
+  x-ai/grok-4.7: [2.00, 6.00]
+  xiaomi/mimo-v2.6-pro: [0.435, 0.87]
+  deepseek/deepseek-v4.1-flash-1017: [0.15, 0.60]
+  google/gemma-4-31b-it:free: [0, 0]
+task:
+  name: lcb                  # lcb | open (no problems: the task dial) | codeeval_pro (pairs with hidden dependencies)
+  level: weak                # open: weak (an open invitation) | none (no goal at all)
+  arrangement: mixed         # codeeval_pro: forward_self | forward_partner | backward_self | backward_partner |
+                             # control | mixed (siam/tasks/cep_streams.py); manifest.json in each world folder
+  length: 12                 # codeeval_pro: items per agent (equal for all)
+  adversarial: ""            # state_chain: "" | inject | ctl | user | adversary (study ADV; siam/tasks/state_chain.py)
+  gap: 2                     # codeeval_pro: items between the two items of a pair (stream positions)
+  rotate: 0                  # codeeval_pro: the seeded pair order is rotated by this many pairs (counterbalancing:
+                             # the same layout of slot types, other pairs in each slot)
+  hint: false                # state_chain: true = the instructions say that later tasks may ask about earlier answers
+  gate: false                # codeeval_pro: true = the second item of a cross-agent link is not handed out before
+                             # the first is closed (the agent takes its next item meanwhile, or waits)
+
+cep_grader:                  # codeeval_pro: docker build -t siamese-cep:1 -f third_party/codeeval_pro/Dockerfile .
+  image: siamese-cep:1
+  timeout_per_test: 30       # CodeEval-Pro runs each program with a 30 s limit
+  memory: 2g
+  cpus: 1
+  pids_limit: 256
+  tmpfs_size: 256m
+  ctx_size: 1m
+  command_timeout_s: 900
+  output_bytes: 1048576

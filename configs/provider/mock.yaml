@@ -1,0 +1,6 @@
+name: mock
+model: mock-random
+temperature: 1           # default since 2026-10-14 (was 0 for groq and openrouter, 0.5 for openai and mock)
+top_p: 0.5
+timeout: 120
+max_retries: 0

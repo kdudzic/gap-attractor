@@ -1,0 +1,5 @@
+backend: fixture
+fixture_path: tests/fixtures/wiki/fixture_pages.json
+dump_path: null
+cache_dir: .cache/gap_attractor
+variant: full

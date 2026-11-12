@@ -1,0 +1,3 @@
+# @package ctx
+# The model edits its context with the edit_context tool (no sandbox).
+interface: tool

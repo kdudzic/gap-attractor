@@ -1,0 +1,106 @@
+# @package ctx
+# The mechanics (as neutral.yaml) plus a routine for keeping the context small (bash interface only; our own wording,
+# built from elements that recur in the context-management literature: stale output first, newest turns raw, a stub with the
+# exact title, in-place notes, a trigger below the limit, a check after each change. No next steps, no ownership rule, no backups). Placeholders (filled by ctxfile/memory.py): {budget} (the limit and held moves, or nothing), {notice}
+# (the size readout clause), {max_edit_turns}, {more}, {tool}, {roles} (what role= means, single or joint),
+# {calls_kept}, {workspace}, {kept_files}, {timeout} (bash), {turn_format} (none, with headers); literal
+# braces are doubled. Joint instructions: {others} ("1 other agent" or "N other agents"), {s} (a verb's s after one
+# other agent), {agent}. The opening (the task only) is the system prompt
+# (the prompt group: browse, free or find); this text follows it. Nothing here may say why the session exists.
+prompt_style: recipe
+instructions:
+  tool: |-
+    ## Your context
+    Your context is everything after this message: a numbered list of turns, each starting with a line such as
+    [[TURN 3 role=user]]. {roles} Nothing else is kept from one page to the next.
+    - When you follow a link, your move is added, followed at once by the page it opened: its text and its list of
+      links, as two turns{notice}.
+    - Each edit_context call is added once it has run, followed at once by its result.
+    - Nothing is removed unless you remove it.
+
+    {budget}
+
+    You can change your context with the edit_context tool, up to {max_edit_turns} times before each move{more};
+    editing is not a move. One call holds one or more of these lists, all its edits apply together or not at all,
+    and turn numbers are the ones you see now:
+    - replace_turns: put one text of your own in place of turns first to last, for example
+      {{"replace_turns": [{{"first": 1, "last": 2, "summary": "your text"}}]}}
+    - delete_turns: remove turns first to last, for example {{"delete_turns": [{{"first": 4, "last": 4}}]}}
+    - replace_text: inside one turn, replace a piece of its text that occurs there exactly once, for example
+      {{"replace_text": [{{"turn": 1, "old": "a sentence from turn 1", "new": "your text"}}]}}
+    The newest list of links cannot be changed until you have moved; everything else can, including the page you
+    just opened. After each edit you see what changed and the new size.
+  bash: |-
+    ## Your context
+    Your context is everything after this message: a list of turns. In your sandbox it is also the file
+    /ctx/context.txt, one block per turn, each starting with a line such as [[TURN 3 role=user]]. {roles} Nothing
+    else is kept from one page to the next{kept_files}.
+    - When you follow a link, your move is added, followed at once by the page it opened: its text and its list of
+      links, as two turns{notice}.
+    - Each command you run is added once it has finished, followed at once by what it printed.
+    - Nothing is removed unless you remove it.
+
+    {budget}
+
+    You can run commands with the bash tool, up to {max_edit_turns} times before each move{more}; a command is not a
+    move. When a command changes /ctx/context.txt, your context changes the same way from your next call on. There is
+    no network. {workspace} Each command may run for up to {timeout} seconds, and nothing it starts keeps running
+    after it ends. The file holds the same turns you see, each under its [[TURN ...]] line (your moves are written
+    there as [followed link: Title]), so there is no need to print it.
+    A short script is the reliable way to change many lines; this one puts one text in place of turns 3 to 5:
+    python3 - <<'EOF'
+    p = "/ctx/context.txt"; lines = open(p).read().split("\n")
+    starts = [i for i, l in enumerate(lines) if l.startswith("[[TURN ")]
+    end = starts[5] if len(starts) > 5 else len(lines)
+    lines[starts[2] + 1:end] = ["your text", ""]
+    open(p, "w").write("\n".join(lines))
+    EOF
+    A block whose [[TURN ...]] line is gone merges into the block before it. The newest list of links cannot be
+    changed until you have moved; everything else can, including the page you just opened.
+    Keeping the context within its limit is up to you. A routine that works:
+    - Once you have moved, the list of links of the page you left cannot be used again; only the newest list can be
+      opened. Remove older lists first: they are the largest part of the file.
+    - When you are done with a page, put a few lines of your own in place of its text: its exact title and what you
+      want to remember of it.
+    - Leave the newest page, its list of links and the last few turns as they are.
+    - Keep one short block of notes near the top of the file (the pages opened so far, in order, and what you kept
+      from them) and change it in place. Change the parts that are no longer needed; do not rewrite the whole file in
+      one go.
+    - Do this a little at a time, and at the latest when the size notice shows more than about half of the limit. After
+      a change, read the new size notice and check that your notes are still there.
+  none: |-
+    ## Your context
+    Your context is everything after this message.{turn_format} Each page you open is added to it, its text and its
+    list of links, followed by your move. Nothing is removed, and nothing else is kept from one page to the next.
+joint_instructions:
+  labelled: |-
+    ## A shared context
+    You share this context with {others} who browse{s} Wikipedia at the same time, each from its own
+    page; you are agent {agent}. Everyone reads the whole context. Each turn is marked with the agent that added it
+    (agent=k); yours are marked agent={agent}. The agents move one at a time: in each round each opens one page, in
+    an order that changes every round. An agent whose session has ended leaves; its turns stay. The newest list of links is
+    always your own, and you can only open links listed there.
+  anonymous: |-
+    ## A shared context
+    You share this context with {others} who browse{s} Wikipedia at the same time, each from its own
+    page. Everyone reads the whole context; turns do not say which agent added them. The agents move one at a time:
+    in each round each opens one page, in an order that changes every round. An agent whose session has ended leaves; its turns
+    stay. The newest list of links is always your own, and you can only open links listed there.
+  other: |-
+    ## A shared context
+    You share this context with {others} who browse{s} Wikipedia at the same time, each from its own
+    page. Everyone reads the whole context. Turns added by the other agents are marked as another agent's
+    (agent=other, or [another agent]) without saying which one; yours are marked agent=you in the file. The agents
+    move one at a time: in each round each opens one page, in an order that changes every round. An agent whose session has ended
+    leaves; its turns stay. The newest list of links is always your own, and you can only open links listed there.
+  rumour: This context may be shared; others may also read and write it.
+  notes: |-
+    ## Other agents
+    {others} use{s} Wikipedia at the same time, each from its own page and with its own context; you are
+    agent {agent}. You cannot see their contexts. /notes is a folder in your sandbox that you and the other agents
+    can all read and write; it keeps its files for the whole session.
+  notes_rumour: /notes is a folder in your sandbox that keeps its files for the whole session. It may be shared;
+    others may also read and write it.
+  notes_strangers: /notes is a folder in your sandbox that keeps its files for the whole session.
+  full: Any agent can edit any part of the context.
+  readonly_others: You can edit only the turns you added; other agents' turns cannot be changed.

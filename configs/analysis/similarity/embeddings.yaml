@@ -1,0 +1,6 @@
+# Pages as unit-length text embeddings (analysis/embedder + analysis/page_text). Similarity = cosine.
+# Works for any graph whose pages have text; no topic tables.
+kind: embeddings
+cache_dir: ${oc.env:GAP_ATTRACTOR_CACHE,data/cache}/embeddings   # shared: a page is embedded once
+prevalence_sample: 2000     # random articles averaged for the expected similarity after a jump to a random page
+max_new_pages: 1000000      # refuse to embed more new pages than this in one analysis (cost guard)

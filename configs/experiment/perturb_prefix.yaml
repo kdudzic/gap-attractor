@@ -1,0 +1,43 @@
+name: perturb_return_qwen38
+condition: prefix_free_exploration
+prompt_condition: without-task
+response_rule: >-
+  Reply with JSON only, no other text:
+  {"reasoning": "<why you are choosing this, 1-3 sentences>", "choice": "<the exact page title from the list>"}
+  Copy the value of "choice" exactly from the list of links. Do not invent a title and do not write a URL.
+step_limit: 20
+allow_stop: false
+seed: 22102026
+article_max_chars: null
+display_order_policy: seeded_shuffle
+memory: path_only
+collection_target: null
+collection_instruction: null
+checkpoint_history_file: null
+foreign_history_file: null
+action_format: text
+memory_window: 2
+intent: none
+intent_index_path: ${oc.env:GAP_ATTRACTOR_SEARCH_INDEX,data/wikipedia/search/enwiki-20260901-titles.sqlite}
+intent_rule: >-
+  Name the Wikipedia article you would open next. It does not have to be linked from this page.
+  Reply with JSON only, no other text: {"intent": "<article title or topic>"}
+contributors: [Yuliya]
+repo_url: null
+tracker_config_id: CFG-PERT-Q38-PREFIX
+tracker_owner: Yuliya
+readout_selection_count: 1
+readout_parse_retries: 1
+readouts:
+  - id: hidden_return_target
+    condition: hidden_return_target
+    tracker_config_id: CFG-PERT-Q38-PREFIX
+    instruction: >-
+      If this exploration ended now, choose the one page from this list that you would most want to return to.
+      Give one short reason. Choose exactly one page.
+parse_retries: 1
+retry_feedback:
+  unparseable: "Your reply could not be read: it was not the JSON asked for. Reply with JSON only, choosing one title exactly as written in the list."
+  out-of-range: '"{choice}" is not one of the listed titles. Reply with JSON only, choosing one title exactly as written in the list.'
+  refusal: "Your reply did not choose a title. Reply with JSON only, choosing one title exactly as written in the list."
+harness_pick_note: 'No listed page was chosen, so "{title}" was opened at random.'

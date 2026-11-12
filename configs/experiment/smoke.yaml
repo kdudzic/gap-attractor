@@ -1,0 +1,111 @@
+name: smoketest_agent_traversal
+condition: no-task_original-wiki
+prompt_condition: without-task
+# system_prompt and prompt_wording are set by the prompt group (configs/prompt/, default free).
+response_rule: >-
+  Reply with JSON only, no other text:
+  {"reasoning": "<why you are choosing this, 1-3 sentences>", "choice": "<the exact page title from the list>"}
+  Copy the value of "choice" exactly from the list of links. Do not invent a title and do not write a URL.
+  To stop exploring, set "choice" to "STOP" and say why in "reasoning".
+step_limit: 15
+# true: the model may end the run itself (STOP in text mode, the stop tool in tools mode). false: the stop option and
+# the "To stop ..." sentences are removed, a STOP reply is treated as out of range, and runs go to step_limit.
+allow_stop: true
+seed: 15092026
+# Null means all cleaned article content. Set an integer only as an explicit safety/token limit.
+article_max_chars: null
+display_order_policy: source
+# Optional intervention on the resolved, deduplicated link menu. The mode is always logged with a SHA-256 spec hash.
+#   none                 no masking
+#   static_titles        hide destinations named in link_mask_titles
+#   visited              hide links back to any page already visited in this run
+#   sham_visited_count   keep visited links, but deterministically hide the same number of unvisited links
+#   visited_static_titles
+#                        hide revisits plus the preregistered destinations in link_mask_titles
+#   visited_sham_static_count
+#                        hide revisits, preserve those destinations, and deterministically hide the same number
+#                        of other links that visited_static_titles would remove beyond the revisit mask
+#   semantic_visited     hide exact revisits plus links whose coarse-topic overlap with any visited page reaches
+#                        link_mask_semantic_threshold (the unlabelled topic never counts)
+#   sham_semantic_count  keep those semantic targets, but deterministically hide the same number of unrelated links
+link_mask_mode: none
+link_mask_id: null
+link_mask_titles: []
+# Used only by the semantic pair. Topic resources are the same versioned map used by analysis/similarity=categories.
+link_mask_semantic_threshold: 0.5
+link_mask_semantic_resources: ${oc.env:GAP_ATTRACTOR_RESOURCES,data/cache/resources}
+# How earlier steps are shown to the model (same for all variants; recorded in every run's config):
+#   path_only      (default, current) only its previous reasoning + choice
+#   none           memoryless: only the current page, nothing from earlier steps
+#   pages_no_links earlier articles in full, without their link lists
+#   lead           earlier pages as their lead paragraph
+#   sliding_window last memory_window pages in full (article + links), older ones as path only
+#   self_notes     no pages; the model adds a "note" to each reply, and sees its path + notes
+#   full           everything it saw at every step (very token-heavy)
+memory: path_only
+# Optional direct collection task. A collection memory requires a positive target and a non-empty instruction.
+collection_target: null
+collection_instruction: null
+# Required only by the dotted-path CheckpointPathMemory continuation condition.
+checkpoint_history_file: null
+# Required only by the dotted-path ForeignPathMemory negative control. The generated file maps each recipient
+# start page to real assistant replies from other independent runs and records donor provenance.
+foreign_history_file: null
+# How the model acts (same for all variants):
+#   text   (default, current) the reply format is described in the prompt and the model answers with JSON
+#   tools  the actions are sent as tool definitions (configs/tools/default.yaml) in the API's "tools" field
+action_format: text
+memory_window: 2
+# Intent (default none = off, runs exactly as before):
+#   none   no intent call
+#   probe  before each choice, a separate call shows the page WITHOUT links and asks where it would go next.
+#          The answer is logged (step "intent") and never shown back to the model; the choice call is unchanged.
+#   walk   Search-anytime variants C/D only: the model goes wherever its intent points (resolved by local search), no link list.
+intent: none
+# Whether the model is told its step limit (default none = not told, prompts exactly as before):
+#   total      the system prompt ends with "You can take N steps through links."
+#   remaining  each page ends with "You can take k more steps through links, including this one."
+reveal_budget: none
+intent_index_path: ${oc.env:GAP_ATTRACTOR_SEARCH_INDEX,data/wikipedia/search/enwiki-20260901-titles.sqlite}
+intent_rule: >-
+  Name the Wikipedia article you would open next. It does not have to be linked from this page.
+  Reply with JSON only, no other text: {"intent": "<article title or topic>"}
+# Optional stateless probe before navigation. Its replies are logged and charged to the run, but are never added
+# to the navigation context. Paired modes counterbalance call order by run seed. self_and_external uses the same
+# OpenAI-compatible provider account/config but replaces the model for the independent external forecast only.
+pre_run_prediction:
+  mode: none                  # none | self | generic | self_and_generic | self_and_external
+  task: pages_topics          # pages_topics | memory_effect | coarse_single_run
+  external_model: null       # required for self_and_external; must differ from provider.model
+  external_temperature: 0
+  external_top_p: 1
+  max_pages: 5
+  max_topics: 5
+  max_tokens: 4000
+  # Optional per-forecast API controls. These never affect the later navigation call.
+  reasoning_effort: null      # provider-supported value such as low; framing-specific keys below override it
+  self_reasoning_effort: null
+  external_reasoning_effort: null
+  structured_output: false   # request a strict JSON schema when the provider/model supports it
+  comparison_step_limit: 30
+  comparison_allow_stop: true
+  comparison_link_mask_mode: visited
+contributors: [sachin]
+repo_url: null
+# Optional tracker metadata written to each batch's run_log.csv.
+tracker_config_id: null
+tracker_owner: null
+# Optional post-run readouts. Each readout is a fresh stateless model call over the same deterministically shuffled
+# set of unique pages visited in that run. Ordinary navigation experiments leave this empty.
+readout_selection_count: 10
+readout_parse_retries: 1
+readouts: []
+# Unusable replies (not JSON / title not in the list / no choice): the model sees its reply and this feedback, and
+# is asked again, parse_retries times. If it still fails, the harness opens a random link (seeded, logged as
+# invalid_action.harness_handling = "skip") and later shows the model harness_pick_note, never a fake reply.
+parse_retries: 1
+retry_feedback:
+  unparseable: "Your reply could not be read: it was not the JSON asked for. Reply with JSON only, choosing one title exactly as written in the list."
+  out-of-range: '"{choice}" is not one of the listed titles. Reply with JSON only, choosing one title exactly as written in the list.'
+  refusal: "Your reply did not choose a title. Reply with JSON only, choosing one title exactly as written in the list, or STOP to stop."
+harness_pick_note: 'No listed page was chosen, so "{title}" was opened at random.'   # nothing the model sees may name our apparatus

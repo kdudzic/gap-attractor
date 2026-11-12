@@ -1,0 +1,49 @@
+# Tools the model can call when experiment.action_format=tools (default is text = JSON in the prompt).
+# They are sent in the API's standard "tools" field, not written into the prompt.
+# Which tools are offered at each call is decided by the variant:
+#   A, and B after its search:  follow_link, stop
+#   B's first step:             search, stop
+#   C:                          follow_link + search (order alternates every step), stop
+# Edit descriptions/parameters here; no code change needed. The model never sees this file's comments.
+
+rule: >-
+  Act by calling one of the available tools. Use page titles exactly as they are listed.
+retry_prompt: >-
+  Please act by calling one of the available tools.
+note_description: >-
+  1-2 sentences you want to remember from this page.
+
+definitions:
+  follow_link:
+    description: Open one of the pages listed under "Candidate links" or in the search results.
+    parameters:
+      type: object
+      properties:
+        title:
+          type: string
+          description: The page title, exactly as it is listed.
+        reasoning:
+          type: string
+          description: Why you are choosing this page, in 1-3 sentences.
+      required: [title]
+  search:
+    description: Search Wikipedia by title and get a short list of matching articles.
+    parameters:
+      type: object
+      properties:
+        query:
+          type: string
+          description: Your search terms.
+        reasoning:
+          type: string
+          description: Why you are searching for this, in 1-3 sentences.
+      required: [query]
+  stop:
+    description: Stop exploring.
+    parameters:
+      type: object
+      properties:
+        reason:
+          type: string
+          description: Why you are stopping.
+      required: [reason]

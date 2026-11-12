@@ -1,0 +1,20 @@
+# @package ctx
+# The CLM paper's way: the model edits its context file with bash commands, each agent in its own Docker sandbox
+# (nothing of the host mounted; see ctxfile/sandbox.py). Needs Docker and the image:
+#   docker build -t gap-ctx-sandbox:1 experiments/context_file/sandbox
+interface: bash
+bash:
+  image: gap-ctx-sandbox:1
+  command_timeout_s: 120      # the CLM repo's default per command
+  output_chars: 10000         # stdout/stderr shown to the model, head + tail
+  output_bytes: 65536         # read per stream at most; the rest is counted, not kept
+  workspace: persistent       # single agent: persistent (/work kept for the run, as in CLM) | per_step (emptied every step)
+  joint_workspace: private    # joint world: private (one per agent; default from 22 Oct 2026, so each condition has only
+                              # the channel it names) | shared (one /work for all agents) | per_step
+  pids_limit: 128
+  memory: 512m
+  cpus: 1
+  tmpfs_size: 64m             # /work and /tmp
+  ctx_size: 16m               # /ctx
+  max_file_bytes: 8388608     # largest file a command may write; the context file is read back only up to this
+  nofile: 256

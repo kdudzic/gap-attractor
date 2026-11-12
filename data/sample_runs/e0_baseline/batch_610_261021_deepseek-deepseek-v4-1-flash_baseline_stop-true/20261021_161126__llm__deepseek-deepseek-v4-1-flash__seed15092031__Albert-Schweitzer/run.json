@@ -1,0 +1,193 @@
+{
+  "schema_version": "3.11",
+  "batch_id": "batch_610_261021_deepseek-deepseek-v4-1-flash_baseline_stop-true",
+  "batch_index": 610,
+  "run_id": "20261021_161126__llm__deepseek-deepseek-v4-1-flash__seed15092031__Albert-Schweitzer",
+  "run_index": 5,
+  "start_page": "Albert Schweitzer",
+  "variant": "a_hub",
+  "condition": "baseline_stop-true",
+  "config": {
+    "provider": {
+      "name": "openrouter",
+      "model": "deepseek/deepseek-v4.1-flash-1017",
+      "temperature": 1,
+      "top_p": 1,
+      "timeout": 120,
+      "max_retries": 4,
+      "api_key_env": "OPENROUTER_API_KEY",
+      "base_url": null,
+      "max_tokens": 4000,
+      "max_backoff_s": 60,
+      "extra_body": {},
+      "drop_unsupported_params": true
+    },
+    "wikipedia": {
+      "backend": "dump",
+      "fixture_path": null,
+      "dump_path": "data/wikipedia/enwiki-20260901",
+      "cache_dir": "data/cache",
+      "dump_xml_filename": "enwiki-20260901-pages-articles-multistream.xml.bz2",
+      "dump_index_filename": "enwiki-20260901-pages-articles-multistream-index.txt.bz2",
+      "max_compressed_block_bytes": 32000000,
+      "variant": "full",
+      "lookup_format": "sqlite",
+      "page_cache_size": 4096,
+      "xml_path": "enwiki-20260901-pages-articles-multistream.xml.bz2",
+      "index_path": "enwiki-20260901-pages-articles-multistream-index.txt.bz2",
+      "lookup_path": "data/cache/title_lookup.sqlite",
+      "snapshot_date": null,
+      "creation_date_source": "not available in current-revision dump"
+    },
+    "experiment": {
+      "name": "e0_baseline",
+      "condition": "baseline_stop-true",
+      "prompt_condition": "without-task",
+      "response_rule": "Reply with JSON only, no other text: {\"reasoning\": \"<why you are choosing this, 1-3 sentences>\", \"choice\": \"<the exact page title from the list>\"} Copy the value of \"choice\" exactly from the list of links. Do not invent a title and do not write a URL. To stop exploring, set \"choice\" to \"STOP\" and say why in \"reasoning\".",
+      "step_limit": 15,
+      "allow_stop": true,
+      "seed": 15092026,
+      "article_max_chars": null,
+      "display_order_policy": "seeded_shuffle",
+      "memory": "path_only",
+      "action_format": "text",
+      "memory_window": 2,
+      "intent": "none",
+      "reveal_budget": "none",
+      "intent_index_path": "data/wikipedia/search/enwiki-20260901-titles.sqlite",
+      "intent_rule": "Name the Wikipedia article you would open next. It does not have to be linked from this page. Reply with JSON only, no other text: {\"intent\": \"<article title or topic>\"}",
+      "contributors": [
+        "kacper"
+      ],
+      "repo_url": null,
+      "tracker_config_id": "e0_deepseek-v41-flash-1017_budget-none_stop-true",
+      "tracker_owner": "Kacper",
+      "parse_retries": 1,
+      "retry_feedback": {
+        "unparseable": "Your reply could not be read: it was not the JSON asked for. Reply with JSON only, choosing one title exactly as written in the list.",
+        "out-of-range": "\"{choice}\" is not one of the listed titles. Reply with JSON only, choosing one title exactly as written in the list.",
+        "refusal": "Your reply did not choose a title. Reply with JSON only, choosing one title exactly as written in the list, or STOP to stop."
+      },
+      "harness_pick_note": "No listed page was chosen, so \"{title}\" was opened at random.",
+      "prompt_wording": "free",
+      "system_prompt": "You are free to do what you want."
+    },
+    "tools": {
+      "rule": "Act by calling one of the available tools. Use page titles exactly as they are listed.",
+      "retry_prompt": "Please act by calling one of the available tools.",
+      "note_description": "1-2 sentences you want to remember from this page.",
+      "definitions": {
+        "follow_link": {
+          "description": "Open one of the pages listed under \"Candidate links\" or in the search results.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "description": "The page title, exactly as it is listed."
+              },
+              "reasoning": {
+                "type": "string",
+                "description": "Why you are choosing this page, in 1-3 sentences."
+              }
+            },
+            "required": [
+              "title"
+            ]
+          }
+        },
+        "search": {
+          "description": "Search Wikipedia by title and get a short list of matching articles.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "query": {
+                "type": "string",
+                "description": "Your search terms."
+              },
+              "reasoning": {
+                "type": "string",
+                "description": "Why you are searching for this, in 1-3 sentences."
+              }
+            },
+            "required": [
+              "query"
+            ]
+          }
+        },
+        "stop": {
+          "description": "Stop exploring.",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "reason": {
+                "type": "string",
+                "description": "Why you are stopping."
+              }
+            },
+            "required": [
+              "reason"
+            ]
+          }
+        }
+      }
+    },
+    "context_embedding": {
+      "enabled": false
+    },
+    "output": {
+      "directory": "runs",
+      "save_model_inputs": true
+    },
+    "batch": {
+      "resume": false,
+      "index": 610,
+      "start_pages": [
+        "Spreadsheet",
+        "Canton of Glarus",
+        "ING Group",
+        "Cadmium",
+        "Albert Schweitzer",
+        "Louvre Palace",
+        "Longford",
+        "Archer (2009 TV series)",
+        "Bob Hoskins",
+        "Giorgio Armani",
+        "James Wyatt",
+        "Richard Widmark",
+        "Florida Complex League",
+        "0-6-0",
+        "Fear Factory",
+        "Osaka Kintetsu Buffaloes",
+        "Vermont House of Representatives",
+        "Boy Meets World",
+        "Honda Racing Corporation",
+        "Hengelo"
+      ],
+      "start_page_source": "variant.start_pages_file: data/start_pages/hubs_A_natural.txt (sampled with seed 15092026)"
+    },
+    "variant": {
+      "name": "a_hub",
+      "start_pages_file": "data/start_pages/hubs_A_natural.txt",
+      "start_pages_column": "title",
+      "runs_per_start": 1,
+      "start_pages_source": null,
+      "n_runs": 20
+    },
+    "run_seed": 15092031,
+    "harness_git_commit": "6cdcc09e6ae507986f7b17ee85eab70318ac59b1",
+    "harness_git_dirty": false
+  },
+  "outcome": {
+    "outcome_category": "A-normal",
+    "termination_reason": "model_stopped",
+    "model_stop_statement": "No specific navigation objective or question was provided, so there is no useful next page to select from the candidate links. Stopping avoids making an arbitrary choice."
+  },
+  "effective_sampling": {
+    "temperature": 1,
+    "top_p": 1,
+    "seed": 15092031,
+    "dropped": [],
+    "checked": true
+  }
+}

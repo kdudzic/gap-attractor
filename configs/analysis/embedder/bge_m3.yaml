@@ -1,0 +1,12 @@
+# BAAI bge-m3 via OpenRouter: 1024 dimensions, ~$0.01 per million tokens. The default embedder: it is not from any
+# agent model family we test. Any OpenAI-compatible /embeddings endpoint works: change base_url and api_key_env.
+kind: openai_compatible
+model: baai/bge-m3
+base_url: https://openrouter.ai/api/v1
+api_key_env: OPENROUTER_API_KEY
+dimensions: null            # null: the model's own size
+batch_size: 64
+concurrency: 8              # parallel requests; does not change the vectors
+max_input_chars: 2000
+timeout: 60
+retries: 5

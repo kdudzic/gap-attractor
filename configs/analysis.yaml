@@ -1,0 +1,90 @@
+# gap-attractor-analyze: the analysis pipeline over run folders (docs/analysis.md).
+#   outcomes: how runs end per condition (stop rates, invalid replies, tokens); needs only the run folders
+#   clicks:   each click versus reference choosers on the same menu (old name: topics)
+#   walks:    whole runs versus random walks from the same start page on a link graph
+#   hypotheses:  where the chosen link ranks on fixed scores (similarity, hub, human, ...), against reference choosers
+#   convergence: do runs from different start pages end up in the same place, hop by hop, against walks
+#   loops:       A -> B -> A bounces, and how the chance of escaping changes with each bounce
+# The baselines are random walks and human clicks, with no fitted parameters.
+# Exchangeable parts (config groups under configs/analysis/, switch with e.g. analysis/similarity=embeddings):
+#   similarity  how alike two pages are: categories (topic mixes) | embeddings | none
+#   embedder    with similarity=embeddings: which embedding model (bge_m3 | qwen3_embedding_8b | mock)
+#   page_text   with similarity=embeddings: what text of a page is embedded (lead | title)
+#   graph       the link graph the walks run on (wikipedia_core)
+#   topics      with similarity=categories: the topic roots; the resources must be built with the same list
+defaults:
+  - analysis/topics: roots
+  - analysis/similarity: categories
+  - analysis/embedder: bge_m3
+  - analysis/page_text: lead
+  - analysis/graph: wikipedia_core
+  - _self_
+
+stages: [outcomes, clicks, walks]   # run any subset of outcomes, clicks, walks, hypotheses, convergence, loops
+
+resources: ${oc.env:GAP_ATTRACTOR_RESOURCES,data/cache/resources}   # scripts/build_wiki_resources.py
+
+data:
+  paths: []                     # run folders, batch folders or experiment folders
+  menu_dedupe: page_id          # page_id: one entry per destination page (schema 2.x lists redirects twice) | row
+  exclude_handling: [skip, terminate]   # harness random picks and infrastructure failures are not decisions
+  on_choice_outside_menu: raise # raise | drop
+
+models: [uniform, jump, clickstream]   # registered names or dotted paths (gap_attractor.analysis.models); novelty also exists
+clickstream_unlisted: 5         # clicks assumed for a link missing from the clickstream (it had 0-10); try 1 and 10
+
+group_by:                       # condition = these fields of run.json (+ schema major version, never pooled)
+  variant: variant
+  llm: config.provider.model
+  memory: derived.memory_setup    # experiment.memory + the settings a plug-in memory declares (run.json memory_settings)
+  intent: config.experiment.intent
+  world: derived.world_setup      # config.world.name; in a multi-agent world also n agents and the set of models
+  prompt: derived.prompt_wording  # free | browse | notask | custom-<hash>; older runs matched by their prompt text
+  stop: derived.allow_stop        # true unless the run had experiment.allow_stop=false
+  temperature: derived.effective_temperature   # the temperature the model actually got: provider-default when the
+                                  # provider left it out (e.g. Claude Haiku 5.5 on OpenRouter); default 1 from 2026-10-14
+  budget: config.experiment.reveal_budget   # none | total | remaining (schema 3.11); runs before it: none
+  effort: config.provider.extra_body.reasoning.effort   # low | medium | high; none = provider default
+
+walks:
+  baselines: [uniform, jump, no_revisit, clickstream]
+  per_run: 100                  # walks per agent run and baseline
+  distance: false               # also end_distance (one BFS over the graph per start page, ~10 s each)
+  max_distance: 8
+
+hypotheses:                     # analysis/hypotheses.py; no fitted parameters
+  tests: [similarity, hub, human, novelty, backtrack, position, random]   # also self_interest (similarity=embeddings)
+  references: [uniform, clickstream, indegree]   # the chooser the lift is measured against ("beyond B")
+  primary: [similarity, hub, human]   # declared before the main runs; Holm-adjusted within this family (uniform)
+  placebos: [random]            # must come out null
+  checks: [position]            # primacy bias: real behaviour, not a failure (links are shown in a seeded shuffle)
+  cluster_by: start_page        # start_page: runs of one condition from the same start page are one cluster | run
+  lambdas: [0.1, 0.5, 0.9]      # mixing weight with uniform for bits per step (declared, not fitted)
+  self_text: "artificial intelligence, language models, machine minds, consciousness and self-awareness"
+  n_boot: ${n_boot}
+  seed: ${seed}
+
+convergence:                    # analysis/convergence.py; hop by hop against walks from the same start pages
+  baselines: [uniform, no_revisit, indegree, clickstream]
+  walks_per_run: 50             # also the number of Monte Carlo replicates
+  max_hop: 15
+  top_k: 20                     # size of the attractor set in the split-half absorption test
+  n_splits: 20
+  split_by: start_page           # groups never split apart: start_page (runs from one start page together) | run
+
+loops:                          # analysis/loops.py
+  max_bounces: 5                # hazard bins 1 .. max_bounces (the last pools longer loops)
+  cluster_by: start_page        # start_page | run
+  paired_field: null            # e.g. memory: compare bounce_share across its values on the same start pages
+  paired_baseline: null         # e.g. path_only
+
+outcomes:
+  paired_field: null            # e.g. prompt: compare stopping on the same start pages across values of this field
+  paired_baseline: null         # e.g. free
+
+min_row_mass: 20                # topic rows with less mass are flagged (shown, not interpreted)
+n_boot: 2000                    # cluster bootstrap resamples (clusters = runs, or worlds)
+time_bucket: 5                  # steps per bucket in by_time
+seed: 0
+plots: false                    # heatmaps (needs the plots extra: matplotlib)
+output: ${oc.env:GAP_ATTRACTOR_OUTPUT,outputs}/analysis/${now:%Y%m%d_%H%M%S}

@@ -1,0 +1,21 @@
+# @package context_embedding
+# Embed the context the model was given after every step (harness/context_embed.py), for any memory: each turn
+# (once per distinct text) and the whole context. Writes <run>/context_embedding/{steps.jsonl,vectors.sqlite} and
+# run.json context_embedding. Needs the analysis extra (uv sync --extra analysis) and the embedder's API key.
+# Cost: a few thousand tokens per step at bge-m3's ~$0.01 per million tokens, well under a cent per run.
+# Changes nothing the model sees.
+enabled: true
+turns: true                 # a vector per turn (which turns survive, change or disappear)
+file: both                  # mean (length-weighted mean of the turn vectors, free) | direct (one text) | both
+max_input_chars: 16000      # longer texts are cut at paragraph breaks and their pieces averaged (bge-m3: 8k tokens)
+embedder:                   # same keys as configs/analysis/embedder/ (default bge_m3)
+  kind: openai_compatible
+  model: baai/bge-m3
+  base_url: https://openrouter.ai/api/v1
+  api_key_env: OPENROUTER_API_KEY
+  dimensions: null
+  batch_size: 64
+  concurrency: 4
+  max_input_chars: 16000
+  timeout: 60
+  retries: 5

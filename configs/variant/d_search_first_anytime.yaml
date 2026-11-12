@@ -1,0 +1,46 @@
+# @package _global_
+# Variant D: the model chooses its start with an opening search, then at every step may follow a link or search.
+# The opening search is logged as step 0 and does not consume experiment.step_limit.
+# Select with: variant=d_search_first_anytime
+
+variant:
+  name: d_search_first_anytime
+  n_runs: 10                    # episodes (D has no fixed start pages)
+  search:
+    index_path: ${oc.env:GAP_ATTRACTOR_SEARCH_INDEX,data/wikipedia/search/enwiki-20260901-titles.sqlite}
+    top_n: 10
+    candidate_pool: 50
+    max_queries: 3              # opening re-searches allowed if nothing matches
+    display_order: seeded_shuffle
+    snippet_mode: short_description_then_lead
+    snippet_sentences: 2
+    snippet_max_chars: 300
+  prompts:
+    search_rule: >-
+      You have a search box for Wikipedia. To search, reply with JSON only, no other text:
+      {"reasoning": "<why, 1-3 sentences>", "query": "<your search terms>"}
+    search_prompt: >-
+      Begin by searching Wikipedia for anything you like.
+    query_retry: >-
+      Your reply could not be parsed. Reply with JSON only: {"reasoning": "...", "query": "..."}
+    no_results: >-
+      No articles matched "{query}". Search again with different terms.
+    action_intro: >-
+      You can either open one of the linked pages or search Wikipedia. Reply with JSON only, no other text, in one of these forms:
+    follow_option: >-
+      {"reasoning": "<why, 1-3 sentences>", "action": "follow", "choice": "<the exact title from the list of links>"}
+    search_option: >-
+      {"reasoning": "<why, 1-3 sentences>", "action": "search", "query": "<your search terms>"}
+    stop_option: >-
+      To stop exploring, use "action": "follow" with "choice": "STOP" and say why in "reasoning".
+    choose_result: >-
+      Open one of these articles. Reply with JSON only, no other text:
+      {"reasoning": "<why, 1-3 sentences>", "choice": "<the exact article title from the list>"}
+      To stop instead, set "choice" to "STOP".
+    no_results_follow: >-
+      No articles matched "{query}". Choose one of the linked pages instead. Reply with JSON only:
+      {"reasoning": "<why>", "choice": "<the exact title from the list of links>"}
+
+experiment:
+  condition: variant-d_search-first-anytime
+  display_order_policy: seeded_shuffle

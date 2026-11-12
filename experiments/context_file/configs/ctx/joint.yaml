@@ -1,0 +1,47 @@
+# N agents and ONE shared context file holding everything (all agents' pages and moves). Same settings as single
+# otherwise; a larger budget because N agents fill one file.
+defaults:
+  - single
+  - _self_
+mode: joint
+budget_tokens: 98304          # 3 agents x 32768 (sweep.py sets N x the single budget and reserve)
+reserve_tokens: 12288         # 3 x 4096: the shared file's limit is N x the single limit (86 016), the whole file
+                              # counted for every agent (readonly_others included)
+attribution: labelled         # labelled: turns carry agent=k (or "[agent k]" without headers) | other: other agents'
+                              # turns all look the same, agent=other (or "[another agent]"), yours agent=you | none:
+                              # anonymous
+awareness: introduced         # what the instructions say about the others: introduced (who they are, how turns are
+                              # marked) | strangers (nothing) | rumour (only that the context may be shared). strangers
+                              # and rumour need attribution=none
+others_as: auto               # how other agents' turns are sent: own (in their role: a reply is an assistant message
+                              # with its tool calls, whoever wrote it) | user (as user messages; the earlier default when
+                              # labelled). auto = own (from 21 Oct 2026)
+joint:
+  n_agents: 3
+  agent_providers: []         # per-agent provider overrides, cycled by agent number, e.g.
+                              # [{model: deepseek/deepseek-v4.1-flash}, {model: anthropic/claude-haiku-5.5}]
+  order: seeded_shuffle       # seeded_shuffle: a new seeded order every round | fixed: round-robin by agent number
+                              # (a design factor: sweep.py runs both)
+  start_assignment: spread    # spread: consecutive start pages, one per agent | same: all agents on one page
+  sharing: full               # full: anyone edits anything | readonly_others: only your own turns (control) |
+                              # separate: one file per agent under the same scheduler (control)
+goal:
+  task: none                  # none: browse (prompt=browse or free) | find: reach a target page (prompt=find)
+  setup: assigned             # find only. assigned: each agent's target is a turn of the shared context, marked as
+                              # that agent's (protected until it arrives) | external: each agent's target is in its own
+                              # instructions (not in the context, unseen by the others) | pool: the world's targets are
+                              # one list in the context (protected); any agent may reach any; reached ones are struck |
+                              # common: one target for all the world's agents (the worlds file gives them the same one),
+                              # one goal turn in the context, nobody's; any agent's arrival reaches it (stop: first)
+  targets: []                 # target titles, consecutive per world as the start pages (agents per world each; pool:
+                              # the world's list)
+  worlds_file: null           # instead of batch.start_pages + targets: a TSV with world_id, agent_id, start, target
+                              # (scripts/graph/make_race_worlds.py); n_agents rows per world
+  worlds: null                # with worlds_file: only the first N worlds (null = all)
+  stop: all                   # all: each agent runs until it arrives, gives up or reaches the step limit | first: the
+                              # world ends at the end of the round in which the first agent arrives | all_found
+                              # (assigned, external): only its owner's arrival reaches a target, an agent that arrives
+                              # goes on, and the world ends once every target is reached
+  text: Your goal is to reach the Wikipedia page "{target}".
+  pool_text: 'Pages to reach: {targets}. Reaching any one of them counts.'
+  reached_text: The page "{target}" has been reached.

@@ -1,0 +1,4 @@
+# @package experiment
+# Neutral opening for experiments with an explicit task supplied by the experiment/memory interface.
+prompt_wording: explicit_task
+system_prompt: Complete the task below by navigating English Wikipedia.

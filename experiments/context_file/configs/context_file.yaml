@@ -1,0 +1,20 @@
+defaults:
+  - config
+  - ctx: single
+  - ctx_edit: tool            # tool | bash (Docker sandboxes) | none (no editing: the file only grows)
+  - ctx_prompt: neutral       # neutral (mechanics only) | clm (adds CLM-style advice on what to keep)
+  - task: browse              # browse | essay (an essay on any topic, handed in with the stop tool); merged after the
+                              # harness's prompt and tools groups (they are inside `config`), so a task can replace them
+  - override /prompt: browse   # the harness's wording (prompt=free also works; find, this folder's, for goal worlds).
+                                # The prompt states the task only: how to act is in the tools and the tool rule
+  - override /tools: detailed           # the harness's fuller tool descriptions
+  - _self_
+experiment:
+  memory: context_file
+  action_format: tools
+tools:
+  definitions:
+    follow_link:
+      description: >-
+        Open a page: give its title exactly as it appears in the newest list under "Candidate links". You then see
+        that page's text and its own list of links.

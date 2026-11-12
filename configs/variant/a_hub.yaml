@@ -1,0 +1,17 @@
+# @package _global_
+# Variant A: start from a page list (hub pages later); each step the model follows one link.
+# Full link list, no cap, shuffled. Select with: variant=a_hub (the default).
+
+variant:
+  name: a_hub
+  # Optional: a text file with one title per line (e.g. Claire's filtered hub list).
+  # When set, n_runs start pages are sampled from it with the experiment seed; otherwise batch.start_pages is used.
+  start_pages_file: null
+  start_pages_column: title    # column holding the titles when start_pages_file is .tsv/.csv
+  runs_per_start: 1            # episodes per start page (each with its own run seed)
+  start_pages_source: null     # null = automatic (file if set, else batch.start_pages) | batch | file | dotted.path.to.factory
+  n_runs: 10
+
+experiment:
+  condition: variant-a_hub-start          # folder/log label only, never shown to the model
+  display_order_policy: seeded_shuffle

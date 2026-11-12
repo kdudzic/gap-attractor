@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.pytest_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# Secrets
+.env
+
+# Generated locally: runs, analysis output, caches
+outputs/
+runs/
+tests/output/
+.cache/
+
+# Large inputs you download or build yourself (docs/reproduce.md)
+data/wikipedia/
+data/cache/
+data/graph/

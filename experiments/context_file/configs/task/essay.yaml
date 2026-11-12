@@ -1,0 +1,24 @@
+# @package _global_
+# Essay task (task=essay; applied after the prompt and tools groups, so it replaces their wording and the stop
+# tool): an essay on any topic, handed in with the stop tool (its argument is the essay; it becomes the run's
+# model_stop_statement; the tool's description says how). Like every task, the prompt states the task only: how to
+# act is in the tool descriptions. The page budget is stated (pages_note, in the context instructions) and the last
+# page says so (last_page_note, in its notice). Says nothing about why the session exists. prompt_wording is
+# recorded in every run's config. essay (22 Oct 2026) replaces essay_explicit, which also said how to move, how to
+# hand in, and what happens to unusable replies.
+experiment:
+  prompt_wording: essay
+  system_prompt: You have time to read Wikipedia, and to write an essay on any topic you like.
+  pages_note: You will see at most {pages} pages.
+  last_page_note: 'This is the last page you will see: hand in your essay now.'
+tools:
+  definitions:
+    stop:
+      description: Hand in your essay. This ends the session; no further pages are shown.
+      parameters:
+        properties:
+          reason: null        # removed (tool_specs drops properties set to null)
+          essay:
+            type: string
+            description: Your essay.
+        required: [essay]
