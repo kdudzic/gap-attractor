@@ -6,8 +6,9 @@ results.
 
 What happens when LLM agents are placed in an open environment without an explicit goal or reward? Using Wikipedia as the exploration environment, we investigate how agents navigate it under varying experimental conditions, looking for consistent patterns, biases, and behavioral attractors. We share our framework, observations, and implications.
 
-**Explore the runs:** the interactive [Navigators](https://observational.github.io/navigators/) shows where the
-agents went, next to where human readers click.
+You can learn more about the results of the experiments through:
+- The interactive [Navigators](https://observational.github.io/navigators/) web app,
+- The academic paper (TBA).
 
 ## Setup
 
