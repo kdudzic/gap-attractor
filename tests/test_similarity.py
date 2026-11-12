@@ -7,12 +7,10 @@ import pytest
 
 from analysis_synth import (add_clicks, analysis_cfg, make_world, write_clickstream, write_graph, write_leads,
                             write_page_topics, write_resources, write_runs)
-from gap_attractor.analysis import kernel, walks
+from gap_attractor.analysis import walks
 from gap_attractor.analysis.cli import run_analysis
-from gap_attractor.analysis.embedding import EMBEDDERS, EmbeddingCache, MockEmbedder
+from gap_attractor.analysis.embedding import EMBEDDERS, EmbeddingCache
 from gap_attractor.analysis.graph import load_graph, save_graph
-from gap_attractor.analysis.logs import load_steps
-from gap_attractor.analysis.models import call_model
 from gap_attractor.analysis.similarity import NoVectors, PageVectors, make_similarity
 
 GROUP = {"llm": "config.provider.model"}

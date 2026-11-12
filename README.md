@@ -164,6 +164,6 @@ The project was carried out in the Sentient Futures Project Incubator, autumn 20
 
 ## Licence and credits
 
-Code and documentation: [PolyForm Noncommercial 1.0.0](LICENSE), free for any noncommercial use. Wikipedia-derived
+Code and documentation: [CC BY-NC 4.0](LICENSE), free to use and adapt with credit for noncommercial purposes. Wikipedia-derived
 data (CC BY-SA 4.0) and third-party material: see [NOTICE.md](NOTICE.md).
 To cite the project, use [CITATION.cff](CITATION.cff).

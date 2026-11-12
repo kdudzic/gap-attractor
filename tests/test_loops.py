@@ -1,6 +1,5 @@
 """Two-page loops and escapes (analysis/loops.py) on synthetic walkers: a constant escape chance shows no decline,
 a walker that bounces more the longer it has bounced (as in-context learning predicts) shows one."""
-import numpy as np
 import pytest
 from omegaconf import OmegaConf
 

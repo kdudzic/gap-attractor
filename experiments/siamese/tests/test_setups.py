@@ -50,7 +50,6 @@ def test_a_deleted_turn_never_reaches_the_model_again(tmp_path, setup):
 @pytest.mark.parametrize("setup", ["assigned", "pool", "external"])
 def test_each_request_is_exactly_system_plus_file_plus_status(tmp_path, setup):
     """At every call, the messages sent equal the instructions + the stored file rendered at that moment + status."""
-    from siam.world import chat_messages
     holder, checked = {}, []
 
     def check(messages):
@@ -175,7 +174,6 @@ def test_pool_attempts_are_capped_per_agent(tmp_path):
 # --- token count, names ------------------------------------------------------------------------------------------
 
 def test_whole_count_includes_tools_and_calibrates_per_model(tmp_path):
-    from gap_attractor.providers import ProviderResponse
 
     class Billed(Scripted):
         def chat(self, messages, **kw):

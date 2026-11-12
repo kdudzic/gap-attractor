@@ -2,9 +2,9 @@
 
 ## Code
 
-The code and documentation in this repository are released under the PolyForm Noncommercial License 1.0.0
-([LICENSE](LICENSE)): free to use, change and share for any noncommercial purpose, including research and
-teaching. For other uses, ask the authors. Exceptions, where a folder states its own terms:
+The code and documentation in this repository are released under the Creative Commons Attribution-NonCommercial
+4.0 International licence, CC BY-NC 4.0 ([LICENSE](LICENSE)): free to use, change and share with credit, for
+noncommercial purposes. For other uses, ask the authors. Exceptions, where a folder states its own terms:
 
 - `experiments/siamese/lcb/` contains code from LiveCodeBench (MIT). See `experiments/siamese/NOTICE.md` and
   `experiments/siamese/lcb/LICENSE`.

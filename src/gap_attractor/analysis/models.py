@@ -74,7 +74,7 @@ def _segment_sum(values: np.ndarray, seg: np.ndarray, n: int) -> np.ndarray:
 def menu_choice(steps: Steps, chi: np.ndarray, p_entry: np.ndarray) -> Prediction:
     """Prediction for a chooser that picks menu entry j with probability p_entry[j] (follow steps only)."""
     seg, _ = _segments(steps)
-    S, K = len(steps), chi.shape[1]
+    S = len(steps)
     w = _segment_sum(p_entry[:, None] * chi[steps.menu], seg, S)
     logp = np.full(S, np.nan)
     f = steps.kind == FOLLOW

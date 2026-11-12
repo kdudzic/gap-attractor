@@ -502,7 +502,6 @@ def test_internal_reasoning_is_read_from_the_service_reply():
 def test_max_tokens_comes_from_the_provider_config(monkeypatch):
     import requests
     from gap_attractor.providers.base import make_provider
-    from omegaconf import OmegaConf
     captured = {}
     class FakeResponse:
         status_code = 200

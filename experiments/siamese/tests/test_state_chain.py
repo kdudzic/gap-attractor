@@ -125,7 +125,6 @@ def test_files_are_there_only_while_the_item_is_open(tmp_path):
     OmegaConf.set_struct(cfg, False)
     w = World(cfg, 1, streams, tmp_path / "w", state_chain.StateChainTask(), factory(a1, a2), label="t")
     w.run()
-    edits = [e for e in read_jsonl(tmp_path / "w" / "edits.jsonl") if e["agent"] == 1]
     context = (tmp_path / "w" / "context.txt").read_text()
     assert first["slug"] in context and f"/work/env/{second['slug']}" not in context.split("[submit]")[0]
     results = read_jsonl(tmp_path / "w" / "results.jsonl")

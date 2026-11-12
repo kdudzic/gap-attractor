@@ -15,7 +15,6 @@ from helpers import Scripted, factory, read_jsonl, tool
 from siam.tasks import state_chain
 from siam.world import World
 import run as runner
-import sweep
 
 SIAMESE = Path(__file__).resolve().parents[1]
 RESULTS = Path("runs/siamese")

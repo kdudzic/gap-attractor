@@ -6,7 +6,7 @@ import re
 import pytest
 from omegaconf import OmegaConf
 
-from helpers import FakeGrader, Scripted, factory, problem, read_jsonl, tool
+from helpers import FakeGrader, Scripted, factory, problem, tool
 from siam.world import World
 import events as ev
 import forks

@@ -12,7 +12,7 @@ from gap_attractor.analysis.cli import CONFIG_DIR, run_analysis
 from gap_attractor.analysis.inference import sign_test
 from gap_attractor.analysis.logs import FOLLOW, Steps, load_steps
 from gap_attractor.analysis.models import get_model, novelty, uniform
-from gap_attractor.analysis.topics import TopicMap, build_topic_map, norm_category
+from gap_attractor.analysis.topics import build_topic_map, norm_category
 
 GROUP = {"llm": "config.provider.model"}
 

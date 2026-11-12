@@ -855,7 +855,6 @@ def run_intent_call(cfg, provider, run_seed, history, page, max_chars, save, sea
     if response.error:
         return None, response.error, caller.termination()
     text, why = parse_intent(response.text)
-    internal = getattr(response, "internal_reasoning", None)
     mapped, method, top = map_intent(search, backend, text, choice_set) if text else (None, None, [])
     return intent_record(text, why, response.text, text is not None, mapped, method, top, choice_set, visited, page,
                          dict(caller.tokens), round(caller.api_seconds, 3), caller.provider_usage(),

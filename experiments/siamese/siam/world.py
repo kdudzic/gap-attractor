@@ -1628,7 +1628,6 @@ class World:
             (self.out / "snapshots" / f"{name}_r{self.round:03d}.txt").write_text(f.text(), encoding="utf-8")
             if self.shared and not f.show_agents:     # unlabelled shared file: a labelled copy for the logs only
                 (self.out / "snapshots" / f"{name}_labelled_r{self.round:03d}.txt").write_text(render(f.turns, True), encoding="utf-8")
-            budget = self.agents[0].budget
             by_agent: dict[str, int] = {}
             for t in f.turns:
                 by_agent[str(t.agent)] = by_agent.get(str(t.agent), 0) + self.tok(self.agents[0], t.text)

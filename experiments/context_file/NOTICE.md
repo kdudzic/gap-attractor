@@ -1,7 +1,7 @@
 # What this folder owes to Context Language Models
 
 This experiment follows **Context Language Models** (Shao et al., 2026, arXiv 2609.37725; code:
-`facebookresearch/context-language-models`, licensed CC BY-NC 4.0). This folder is part of a repository under the PolyForm Noncommercial License 1.0.0.
+`facebookresearch/context-language-models`, licensed CC BY-NC 4.0). This folder is part of a repository licensed CC BY-NC 4.0.
 
 **Taken from the paper and repository (ideas and conventions):**
 - the file format: one block per turn, opened by a header line (CLM: `[[CTX_TURN i role=…]]`; ours: `[[TURN i role=…]]`);

@@ -150,7 +150,7 @@ class Sandbox:
         if out.returncode != 0:
             err = out.stderr.decode(errors="replace").strip()
             return None, ("/ctx/context.txt is not a regular file" if "NOT_A_FILE" in err else
-                          f"/ctx/context.txt is larger than {limit} bytes" if "TOO_BIG" in err else f"/ctx/context.txt could not be read")      # never Docker's own error text
+                          f"/ctx/context.txt is larger than {limit} bytes" if "TOO_BIG" in err else "/ctx/context.txt could not be read")      # never Docker's own error text
         return out.stdout.decode("utf-8", errors="replace"), None
 
     def run(self, command: str) -> dict:

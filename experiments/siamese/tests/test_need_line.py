@@ -102,7 +102,6 @@ def test_need_line_names_the_rendered_block(tmp_path):
     """The named turn is the [[TURN i block of the rendered file, and that block holds V (the numbering the agent reads)."""
     import re
     from ctxfile.context import render
-    from siam.world import NEED_LINES
     w, streams, Turn = need_world(tmp_path, "reason")
     own = next(it for it in streams[0] if it.get("needs") and it.get("link_type"))
     a1 = w.agents[0]
@@ -127,7 +126,6 @@ def sandbox_image():
 def test_need_line_in_a_scripted_world(tmp_path):
     """No line while the base is open (V printed by bash before the submit); then lines in the saved request's last message,
     naming the turn that holds V in the file; nothing in context.txt or versions.jsonl; rows join calls.jsonl."""
-    import json, re
     from siam.world import NEED_LINES
     streams, _ = state_chain.build(2, 2, 6)
     base = streams[0][0]

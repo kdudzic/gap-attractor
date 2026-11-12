@@ -10,7 +10,7 @@ from pathlib import Path
 
 import pytest
 
-from gap_attractor.harness.runner import make_backend, read_start_titles, run_experiment, start_pages
+from gap_attractor.harness.runner import read_start_titles, run_experiment, start_pages
 from gap_attractor.providers import MockProvider, make_provider
 from gap_attractor.registry import PROVIDERS, Registry
 from gap_attractor.wikipedia import FixtureBackend

@@ -7,7 +7,7 @@ import pytest
 from gap_attractor.harness import runner
 from gap_attractor.harness import failures as failure_log
 from gap_attractor.harness.memory import Memory
-from gap_attractor.harness.runner import Dataset, episode, run_experiment
+from gap_attractor.harness.runner import episode, run_experiment
 from gap_attractor.providers.base import ProviderResponse
 
 from test_fixture_harness import ROOT, config

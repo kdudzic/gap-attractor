@@ -5,7 +5,6 @@ import csv
 import json
 import sys
 import types
-from pathlib import Path
 
 import pytest
 
@@ -773,7 +772,7 @@ PAGES = [("Oxygen", 10, "Oxygen links to [[carbon]] and [[AT&T]]."), ("Carbon", 
 def synthetic_dump(tmp_path):
     """A two-stream multistream dump plus its index; O2 redirects to Oxygen; Carbon is listed twice in the index."""
     def page_xml(title, page_id, text):
-        body = f'<redirect title="Oxygen" /><revision><id>1</id><text>#REDIRECT [[Oxygen]]</text></revision>' if text is None else \
+        body = '<redirect title="Oxygen" /><revision><id>1</id><text>#REDIRECT [[Oxygen]]</text></revision>' if text is None else \
                f"<revision><id>1</id><timestamp>2026-01-01T00:00:00Z</timestamp><text>{text.replace('&', '&amp;')}</text></revision>"
         return f"<page><title>{title.replace('&', '&amp;')}</title><ns>0</ns><id>{page_id}</id>{body}</page>"
     streams = [PAGES[:2], PAGES[2:]]
