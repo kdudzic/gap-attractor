@@ -1,4 +1,4 @@
-"""Summary charts for the README and docs/results.md.
+"""Summary charts for docs/results.md.
 
     uv run --extra plots python docs/figures/make_figures.py
 

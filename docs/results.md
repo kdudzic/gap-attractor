@@ -2,7 +2,7 @@
 
 Status: **preliminary**, as of 11 November 2026. A paper is in preparation. Every number below comes from the
 team's analysis notes of 9 to 11 November; the full run logs behind them are not in this repository
-(see [../data/README.md](../data/README.md)). The charts in the README are drawn from these numbers by
+(see [../data/README.md](../data/README.md)). The charts on this page are drawn from these numbers by
 [figures/make_figures.py](figures/make_figures.py).
 
 ## How to read this page
@@ -44,6 +44,8 @@ models stay distinguishable, so they are highly correlated but not interchangeab
 | Two different models | 0.42 [0.33, 0.53] |
 | The same model, run twice | 0.56 [0.47, 0.66] |
 
+![Agreement between readers, between different models, and of a model with itself](figures/agreement_ladder.png)
+
 - October grid: 0.383 for different models against 0.103 for two readers, a difference of +0.280 [0.21, 0.35],
   higher on 20 of 20 start pages, Holm-corrected p = 1.4e-5. The table gives the November estimate on 10 models
   (400 one-step runs, two replicates on the same day).
@@ -64,6 +66,8 @@ models stay distinguishable, so they are highly correlated but not interchangeab
   researcher, 0.25 explorer (exploratory against none: explorer −0.21, p = 0.028; researcher −0.18, p = 0.009).
   Under every persona, different models still agree more than two readers (+0.15 to +0.33, all Holm p < 0.02).
 
+![Agreement between different models under five personas](figures/personas.png)
+
 ### 3. What the herd picks (supported with caveats)
 
 - At the first step, models choose links to people at 0.38 [0.27, 0.56] of the reader rate (Holm p = 0.008). Over
@@ -82,6 +86,8 @@ models stay distinguishable, so they are highly correlated but not interchangeab
   the shared first pick.
 - **Free search.** Starting from a blank page with a search box, absorption is 0.178 against 0.003 for random
   walks, with p at its floor in 9 of 9 cells.
+![Absorption for link browsing and free search, agents against random walks](figures/attractor_search_vs_links.png)
+
 - Topic-level convergence (the original H2) is weak or mixed. Settling over a run (H6) is not supported: 0 of 39
   cells pass.
 
@@ -96,6 +102,8 @@ models stay distinguishable, so they are highly correlated but not interchangeab
 - Memory matters. With STOP allowed, memoryless agents bounce more (0.63 against 0.20, Holm 0.008). Self-written
   notes give broader exploration than no memory in all 7 models tested.
 - Reading: loops are produced by the interface (no way to stop, plus a visible path), not by a model preference.
+
+![Backtracking with and without the step-budget sentence](figures/loops_budget_sentence.png)
 
 ### 6. Stopping follows the interface and the persona (supported with caveats)
 
