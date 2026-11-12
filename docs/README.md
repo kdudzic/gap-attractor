@@ -5,7 +5,7 @@ Read in this order if you are new to the project.
 | Document | What it answers |
 |---|---|
 | [../README.md](../README.md) | What the project is, the main findings, how to try it |
-| [Field Map](https://observational.github.io/navigators/) | Interactive site: the runs on a map of Wikipedia, next to human readers |
+| [Navigators](https://observational.github.io/navigators/) | Interactive site: the runs on a map of Wikipedia, next to human readers |
 | [results.md](results.md) | Every finding with its test, the registered hypotheses, what did not survive, limits |
 | [design.md](design.md) | The original experiment sketch written before data collection: definitions, questions, hypotheses H1 to H10. Kept as written, so parts of it describe plans that changed |
 | [architecture.md](architecture.md) | How the harness is put together, in one page |
