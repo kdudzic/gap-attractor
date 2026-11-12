@@ -11,4 +11,4 @@
 
 **Context Language Models** (Shao et al., 2026, arXiv 2609.37725). The context-file format, append-by-default, the
 budget with a reserve, the nudges and the edit gate come through experiments/context_file; see its NOTICE.md. That
-code is ours (MIT); nothing is copied from the CLM repository.
+code is ours (under this repository's licence); nothing is copied from the CLM repository.

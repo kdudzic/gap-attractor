@@ -3,8 +3,6 @@ message: "If you use this repository, please cite it as below. A paper is in pre
 title: "The Gap Attractor: what language-model agents do on Wikipedia when given no task"
 type: software
 authors:
-  - family-names: Bosibori
-    given-names: Cindy
   - family-names: Xu
     given-names: Claire
   - family-names: M D
@@ -19,12 +17,15 @@ authors:
     given-names: Sebastian
   - family-names: Kudriashov
     given-names: Sergei
-  - family-names: Komarova
+  - family-names: Bosibori
+    given-names: Sydney
+  - family-names: Antanovich
     given-names: Yuliya
   - family-names: Bossmann
     given-names: Julia
+url: "https://observational.github.io/navigators/"
 date-released: "2026-11-13"
-license: MIT
+license: PolyForm-Noncommercial-1.0.0
 keywords:
   - language models
   - agents

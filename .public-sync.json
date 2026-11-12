@@ -1,6 +1,5 @@
 {
  "files": [
-  "LICENSE",
   "configs/__init__.py",
   "configs/analysis.yaml",
   "configs/analysis/embedder/bge_m3.yaml",

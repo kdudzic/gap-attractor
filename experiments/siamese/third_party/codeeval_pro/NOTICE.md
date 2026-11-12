@@ -19,5 +19,5 @@ Notes:
   `Requirements/requirements-eval.txt` (github.com/bigcode-project/bigcodebench, commit 09dd993).
 - The tests that need this data (`tests/test_codeeval_pro.py`) are not in this repository.
 
-What is ours (MIT like the rest of this folder): the grader driver (`siam/cep_driver.py`), the grader
+What is ours (under this repository's licence): the grader driver (`siam/cep_driver.py`), the grader
 (`siam/cep_grader.py`), the task and the streams (`siam/tasks/codeeval_pro.py`, `siam/tasks/cep_streams.py`).

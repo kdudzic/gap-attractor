@@ -11,7 +11,7 @@ also reads the CLM spelling, for files written before 16 Oct 2026.)
 
 numbered from 1 in file order. `agent=` appears only in a joint (multi-agent) file with attribution on: the author's
 number (attribution=labelled), or `agent=you` / `agent=other` (attribution=other: other agents all look the same).
-The code here is our own (MIT); see NOTICE for what the format and protocol owe to CLM.
+The code here is our own (under this repository's licence); see NOTICE for what the format and protocol owe to CLM.
 
 Parsing text back (after a bash edit or a text replacement):
 - a header is a whole line `[[TURN <n> role=<user|assistant>[ agent=<k|you|other>]]]`; anything else stays text;

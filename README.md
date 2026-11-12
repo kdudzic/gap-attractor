@@ -16,6 +16,9 @@ This repository is the public deliverable of a Sentient Futures Project Incubato
 2026). It holds the experiment harness, the analysis pipeline, a sample of real runs, and a summary of the
 results. A paper is in preparation; treat the results here as preliminary.
 
+**Explore the runs:** the interactive [Field Map](https://observational.github.io/navigators/) shows where the
+agents went, next to where human readers click.
+
 ## What we found
 
 Short version: we went looking for places the models are drawn to, and mostly found something else. Left alone,
@@ -154,12 +157,13 @@ uv run --env-file .env gap-attractor provider=openrouter provider.model=deepseek
 
 ## Team
 
-Cindy Bosibori, Claire Xu, Gagana M D, Kacper Dudzic, Pooja Manvikar, Sachin Bagoriya, Sebastian Abundis,
-Sergei Kudriashov and Yuliya Komarova (names in alphabetical order). Mentor: Julia Bossmann.
+Claire Xu, Gagana M D, Kacper Dudzic, Pooja Manvikar, Sachin Bagoriya, Sebastian Abundis, Sergei Kudriashov,
+Sydney Bosibori and Yuliya Antanovich (in alphabetical order by first name). Mentor: Julia Bossmann.
 
 The project was carried out in the Sentient Futures Project Incubator, autumn 2026.
 
 ## Licence and credits
 
-Code: MIT, see [LICENSE](LICENSE). Data, Wikipedia text and third-party material: see [NOTICE.md](NOTICE.md).
+Code and documentation: [PolyForm Noncommercial 1.0.0](LICENSE), free for any noncommercial use. Wikipedia-derived
+data (CC BY-SA 4.0) and third-party material: see [NOTICE.md](NOTICE.md).
 To cite the project, use [CITATION.cff](CITATION.cff).
