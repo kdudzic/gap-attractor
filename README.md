@@ -7,7 +7,7 @@ results.
 **Explore the runs:** the interactive [Field Map](https://observational.github.io/navigators/) shows where the
 agents went, next to where human readers click.
 
-## Try it
+## Setup
 
 You need [uv](https://docs.astral.sh/uv/) and Python 3.10 or newer. Clone with git, because the harness records
 its own commit in every run.
